@@ -1603,9 +1603,10 @@
         if (sheetsList.length === 0) {
           clearTimeout(timeoutId);
           showErrorInLoadingPopup(
-            '❌ Data Tidak Ditemukan',
-            'Tidak ada sheet yang ditemukan.',
-            'Silakan hubungi admin untuk memeriksa data.'
+            '❌ Afwan, Data Tidak Ditemukan',
+            'Tidak ada jadwal yang ditemukan atau koneksi buruk.',
+            'Silakan tekan tombol refresh untuk memuat ulang data!',
+            'Hubungi admin untuk memeriksa data jika jadwal masih belum bisa dimuat.'
           );
           isDataLoading = false;
           return;
