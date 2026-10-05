@@ -55,7 +55,7 @@
       left: -280px;
       width: 280px;
       height: 100%;
-        background: linear-gradient(135deg, #2d6a4f 0%, #2e7d32 50%, #2d6a4f 100%);
+      background: linear-gradient(135deg, #2d6a4f 0%, #2e7d32 50%, #2d6a4f 100%);
       z-index: 999;
       transition: left 0.3s ease;
       box-shadow: 2px 0 10px rgba(0,0,0,0.2);
@@ -95,7 +95,6 @@
       font-size: 10px;
     }
     
-    /* Navigasi Menu di Sidebar */
     .sidebar-buttons {
       display: flex;
       flex-direction: column;
@@ -141,7 +140,6 @@
       color: #1e3a2f;
     }
     
-    /* Login Area di Sidebar */
     .sidebar-footer {
       padding: 12px 12px 18px 12px;
       border-top: 1px solid rgba(255,255,255,0.15);
@@ -221,7 +219,6 @@
       text-align: center;
     }
     
-    /* Tombol hamburger */
     .hamburger-btn {
       background: rgba(255,255,255,0.2);
       backdrop-filter: blur(10px);
@@ -247,7 +244,6 @@
       transform: translateY(-50%) scale(1.05);
     }
     
-    /* MAIN CONTENT */
     .main-container {
       transition: margin-left 0.3s ease;
       width: 100%;
@@ -446,12 +442,12 @@
       color: #2d6a4f;
       font-family: inherit;
       border-radius: 10px;
-
     }
     
     .tab-btn:hover {
       background: #e7fde7;
-      transform: translateY(-5px);    }
+      transform: translateY(-5px);
+    }
     
     .tab-btn.active {
       background: linear-gradient(135deg, #2d6a4f 0%, #2e7d32 50%, #2d6a4f 100%);
@@ -500,30 +496,30 @@
       font-size: 15px;
     }
     
-.table-wrapper {
-  overflow-x: auto;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  background: white;
-  display: inline-block; /* atau width: fit-content */
-  width: 100%;
-}
-
-.table-wrapper table {
-  border-collapse: collapse;
-  font-size: 13px;
-  width: max-content; /* tabel selebar konten */
-  min-width: 100%; /* minimal selebar wrapper */
-}
-
-.table-wrapper th,
-.table-wrapper td {
-  border: 1px solid #2e7d32;
-  padding: 10px 12px;
-  text-align: center;
-  vertical-align: middle;
-  white-space: nowrap;
-}
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      background: white;
+      display: inline-block;
+      width: 100%;
+    }
+    
+    .table-wrapper table {
+      border-collapse: collapse;
+      font-size: 13px;
+      width: max-content;
+      min-width: 100%;
+    }
+    
+    .table-wrapper th,
+    .table-wrapper td {
+      border: 1px solid #2e7d32;
+      padding: 10px 12px;
+      text-align: center;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
     
     th {
       background: #f8fafc;
@@ -593,7 +589,7 @@
       .main-container { margin-left: 0; }
     }
     
-    /* Loading overlay */
+    /* ========== LOADING OVERLAY ========== */
     .loading-overlay {
       position: fixed;
       top: 0;
@@ -606,6 +602,12 @@
       align-items: center;
       z-index: 9999;
       backdrop-filter: blur(3px);
+      pointer-events: auto;
+    }
+    
+    .loading-overlay.hidden {
+      display: none;
+      pointer-events: none;
     }
     
     .loading-card {
@@ -622,6 +624,7 @@
     .loading-card h3 {
       color: #2d6a4f;
       margin-bottom: 15px;
+      font-size: 1.1rem;
     }
     
     .progress-container {
@@ -679,14 +682,158 @@
       60% { content: '..'; }
       80%, 100% { content: '...'; }
     }
+    
+    /* ========== STYLE ERROR DI DALAM POPUP LOADING ========== */
+    .loading-card.error-state h3 {
+      color: #b91c1c;
+    }
+    
+    .loading-card .error-icon {
+      font-size: 48px;
+      color: #ef4444;
+      margin-bottom: 12px;
+      display: block;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.08); }
+    }
+    
+    .loading-card .error-message {
+      color: #7f1d1d;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+    
+    .loading-card .error-submessage {
+      color: #94a3b8;
+      font-size: 0.75rem;
+      margin-bottom: 18px;
+    }
+    
+    .loading-card .error-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .loading-card .error-actions button {
+      padding: 9px 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+    
+    .loading-card .error-actions .btn-retry {
+      background: #2d6a4f;
+      color: white;
+    }
+    
+    .loading-card .error-actions .btn-retry:hover {
+      background: #1e4a2f;
+      transform: translateY(-2px);
+    }
+    
+    .loading-card .error-actions .btn-reload {
+      background: #ff8a5c;
+      color: white;
+    }
+    
+    .loading-card .error-actions .btn-reload:hover {
+      background: #e67345;
+      transform: translateY(-2px);
+    }
+    
+    /* ========== AUTO REFRESH INDICATOR ========== */
+    .auto-refresh-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.15);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      margin-left: 8px;
+      color: rgba(255,255,255,0.9);
+      transition: all 0.3s;
+    }
+    
+    .auto-refresh-badge.checking {
+      background: rgba(255,255,255,0.35);
+    }
+    
+    .auto-refresh-badge .dot-indicator {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #52b788;
+      box-shadow: 0 0 6px #52b788;
+      animation: autoPulse 2s ease-in-out infinite;
+    }
+    
+    .auto-refresh-badge.checking .dot-indicator {
+      background: #ffb74d;
+      box-shadow: 0 0 6px #ffb74d;
+    }
+    
+    @keyframes autoPulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    
+    /* Toast notifikasi update data */
+    .refresh-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: linear-gradient(135deg, #2d6a4f 0%, #2e7d32 100%);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(46, 125, 50, 0.4);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+      pointer-events: none;
+    }
+    
+    .refresh-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    @media (max-width: 768px) {
+      .refresh-toast {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        font-size: 12px;
+        padding: 10px 16px;
+      }
+    }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-  <!-- Overlay untuk mobile & desktop -->
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
   
-  <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <img src="logo.png" alt="Logo" class="sidebar-logo" onerror="this.src='https://via.placeholder.com/60'">
@@ -694,10 +841,8 @@
       <p>Ma'had Tamaamul Minnah, Bengle - Karawang</p>
     </div>
     
-    <!-- Menu Navigasi -->
     <div class="sidebar-buttons" id="sidebarNavMenu"></div>
     
-    <!-- Area Login di Sidebar -->
     <div class="sidebar-footer">
       <div id="userStatusSidebar" class="user-status-sidebar"></div>
       <div id="sidebarLoginArea">
@@ -716,7 +861,6 @@
     </div>
   </div>
   
-  <!-- Konten Utama -->
   <div class="main-container" id="mainContainer">
     <div class="container">
       <div class="header">
@@ -732,6 +876,10 @@
         
         <button class="header-refresh" onclick="loadAllData()">
           <i class="fas fa-sync-alt"></i> Refresh Data
+          <span class="auto-refresh-badge" id="autoRefreshBadge">
+            <span class="dot-indicator"></span>
+            <span id="autoRefreshText">Auto 30s</span>
+          </span>
         </button>
       </div>
       
@@ -764,15 +912,21 @@
         <div id="errorArea" style="display: none;"></div>
         <div id="tableArea" style="display: none;"></div>
       </div>
-          <img src="kode.png">
+      <img src="kode.png">
       <div class="footer">
         <p>© 2026 - Lajnah Tahfizh Banin | Ma'had Tamaamul Minnah, Bengle - Karawang</p>
       </div>
     </div>
   </div>
   
+  <!-- Toast notifikasi update data -->
+  <div class="refresh-toast" id="refreshToast">
+    <i class="fas fa-check-circle"></i>
+    <span>Data berhasil diperbarui!</span>
+  </div>
+  
   <script>
-    // ========== SIDEBAR TOGGLE DENGAN LOCALSTORAGE ==========
+    // ========== SIDEBAR TOGGLE ==========
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const sidebar = document.getElementById('sidebar');
     const sidebarOverlay = document.getElementById('sidebarOverlay');
@@ -845,19 +999,20 @@
       }
     });
     
-    // ========== LOADING ANIMASI ==========
-    let loadingInterval = null;
-    let currentProgress = 0;
+    // ========== LOADING ==========
+    let activeTimeout = null;
+    let currentLoadingOverlay = null;
     
     function showLoadingWithProgress(title, steps = ['Menyiapkan', 'Memproses', 'Menyelesaikan']) {
       hideLoading();
-      currentProgress = 0;
+      
+      window.currentProgress = 0;
       let stepIndex = 0;
       const overlay = document.createElement('div');
       overlay.className = 'loading-overlay';
       overlay.id = 'loadingOverlay';
       overlay.innerHTML = `
-        <div class="loading-card">
+        <div class="loading-card" id="loadingCard">
           <h3>${title}</h3>
           <div class="progress-container">
             <div class="progress-bar" id="progressBar"></div>
@@ -868,13 +1023,16 @@
         </div>
       `;
       document.body.appendChild(overlay);
-      loadingInterval = setInterval(() => {
-        if (currentProgress < 90) {
-          currentProgress += Math.random() * 8;
-          if (currentProgress > 90) currentProgress = 90;
-          updateProgress(currentProgress);
+      currentLoadingOverlay = overlay;
+      
+      if (window.loadingInterval) clearInterval(window.loadingInterval);
+      window.loadingInterval = setInterval(() => {
+        if (window.currentProgress < 90) {
+          window.currentProgress += Math.random() * 8;
+          if (window.currentProgress > 90) window.currentProgress = 90;
+          updateProgress(window.currentProgress);
         }
-        const newStepIndex = Math.floor(currentProgress / 30);
+        const newStepIndex = Math.floor(window.currentProgress / 30);
         if (newStepIndex !== stepIndex && newStepIndex < steps.length) {
           stepIndex = newStepIndex;
           const stepEl = document.getElementById('loadingStep');
@@ -890,16 +1048,66 @@
       if (percentEl) percentEl.innerHTML = Math.floor(percent) + '%';
     }
     
-    function completeLoading(success = true, message = '') {
-      if (loadingInterval) clearInterval(loadingInterval);
+    function completeLoading() {
+      if (window.loadingInterval) {
+        clearInterval(window.loadingInterval);
+        window.loadingInterval = null;
+      }
       updateProgress(100);
-      setTimeout(() => { hideLoading(); }, 800);
+      setTimeout(() => { hideLoading(); }, 500);
     }
     
     function hideLoading() {
-      if (loadingInterval) { clearInterval(loadingInterval); loadingInterval = null; }
-      const overlay = document.getElementById('loadingOverlay');
-      if (overlay) overlay.remove();
+      if (window.loadingInterval) {
+        clearInterval(window.loadingInterval);
+        window.loadingInterval = null;
+      }
+      if (currentLoadingOverlay && currentLoadingOverlay.remove) {
+        currentLoadingOverlay.remove();
+      }
+      const existingOverlay = document.getElementById('loadingOverlay');
+      if (existingOverlay) existingOverlay.remove();
+      currentLoadingOverlay = null;
+    }
+    
+    // ========== TAMPILKAN ERROR DI DALAM POPUP LOADING ==========
+    function showErrorInLoadingPopup(title, message, submessage) {
+      if (window.loadingInterval) {
+        clearInterval(window.loadingInterval);
+        window.loadingInterval = null;
+      }
+      
+      const card = document.getElementById('loadingCard');
+      if (!card) {
+        showLoadingWithProgress(title);
+        setTimeout(() => showErrorInLoadingPopup(title, message, submessage), 50);
+        return;
+      }
+      
+      card.classList.add('error-state');
+      card.innerHTML = `
+        <i class="fas fa-exclamation-triangle error-icon"></i>
+        <h3>${title}</h3>
+        <p class="error-message">${message}</p>
+        <p class="error-submessage">${submessage || ''}</p>
+        <div class="error-actions">
+          <button class="btn-retry" onclick="retryFromPopup()">
+            <i class="fas fa-sync-alt"></i> Coba Lagi
+          </button>
+          <button class="btn-reload" onclick="reloadFromPopup()">
+            <i class="fas fa-redo-alt"></i> Refresh Halaman
+          </button>
+        </div>
+      `;
+    }
+    
+    function retryFromPopup() {
+      hideLoading();
+      setTimeout(() => { loadAllData(); }, 200);
+    }
+    
+    function reloadFromPopup() {
+      location.reload();
     }
     
     // ========== SETTING LOGIN ==========
@@ -907,7 +1115,6 @@
     
     let currentUser = null;
     
-    // Menu berdasarkan role
     const menuForRole = {
       public: [
         { id: 'home', label: '🏠 Beranda', type: 'link', url: 'index.html' },
@@ -956,11 +1163,6 @@
       ]
     };
 
-    
-    function getIconClass(id) {
-      return icons[id] || 'fa-circle';
-    }
-    
     function renderNavSidebar() {
       const navContainer = document.getElementById('sidebarNavMenu');
       if (!navContainer) return;
@@ -971,30 +1173,27 @@
         menus = (currentUser.role === 'super_admin') ? menuForRole.super_admin : menuForRole.admin_biasa;
       }
       
-menus.forEach(menu => {
-  const btn = document.createElement('button');
-  btn.className = 'sidebar-btn';
-  if (menu.active) btn.classList.add('active');
-  btn.setAttribute('data-id', menu.id);
-  btn.innerHTML = `${menu.label}`;
+      menus.forEach(menu => {
+        const btn = document.createElement('button');
+        btn.className = 'sidebar-btn';
+        if (menu.active) btn.classList.add('active');
+        btn.setAttribute('data-id', menu.id);
+        btn.innerHTML = `${menu.label}`;
 
-  btn.onclick = () => {
-    if (menu.type === 'link') {
-      // Langsung ke URL target
-      window.location.href = menu.url;
-    } else if (menu.type === 'section') {
-      // Simpan target section ke localStorage, lalu ke index.html
-      localStorage.setItem('targetSection', menu.target);
-      window.location.href = 'index.html';
-    } else {
-      // Default: anggap sebagai link biasa
-      window.location.href = menu.url;
-    }
-    closeSidebar();
-  };
-  
-  navContainer.appendChild(btn);
-});
+        btn.onclick = () => {
+          if (menu.type === 'link') {
+            window.location.href = menu.url;
+          } else if (menu.type === 'section') {
+            localStorage.setItem('targetSection', menu.target);
+            window.location.href = 'index.html';
+          } else {
+            window.location.href = menu.url;
+          }
+          closeSidebar();
+        };
+        
+        navContainer.appendChild(btn);
+      });
     }
     
     // ========== LOGIN FUNGSI ==========
@@ -1029,7 +1228,7 @@ menus.forEach(menu => {
         if (response.success) {
           currentUser = { role: response.role, email: response.email, id: response.id };
           localStorage.setItem('tahfidz_user', JSON.stringify(currentUser));
-          completeLoading(true);
+          completeLoading();
           setTimeout(() => {
             document.getElementById('loginFormSidebar').style.display = 'none';
             document.getElementById('sidebarLoginBtn').style.display = 'none';
@@ -1039,7 +1238,7 @@ menus.forEach(menu => {
             location.replace('index.html');
           }, 1000);
         } else {
-          completeLoading(false);
+          completeLoading();
           setTimeout(() => {
             document.getElementById('loginErrorSidebar').innerHTML = response.message || 'Login gagal';
           }, 800);
@@ -1111,6 +1310,13 @@ menus.forEach(menu => {
     let sheetDataCache = {};
     let rawData = null;
     let rawMerges = null;
+    let isDataLoading = false;
+    
+    // ========== VARIABEL AUTO REFRESH ==========
+    let autoRefreshInterval = null;
+    const AUTO_REFRESH_INTERVAL = 30000; // 30 detik
+    let lastDataHash = ''; // Untuk deteksi perubahan
+    let isAutoChecking = false; // Mencegah overlap saat cek
     
     function findClassColumn(headers) {
       const keywords = ['kelas', 'rombel', 'group', 'class', 'kelompok', 'tingkat', 'tahun'];
@@ -1140,6 +1346,7 @@ menus.forEach(menu => {
       const headers = data[0];
       const classCol = findClassColumn(headers);
       const classFilter = document.getElementById('classFilter');
+      const currentValue = classFilter.value; // Simpan nilai filter aktif
       
       if (classCol === -1) {
         classFilter.innerHTML = '<option value="">Semua Kelas</option>';
@@ -1159,6 +1366,11 @@ menus.forEach(menu => {
       sorted.forEach(k => {
         classFilter.innerHTML += `<option value="${escapeHtml(k)}">${escapeHtml(k)}</option>`;
       });
+      
+      // Kembalikan nilai filter jika masih ada di opsi
+      if (currentValue && sorted.includes(currentValue)) {
+        classFilter.value = currentValue;
+      }
     }
     
     function getFilteredData() {
@@ -1234,36 +1446,84 @@ menus.forEach(menu => {
       }
     }
     
+    // ========== LOAD ALL DATA (TIMEOUT 1 MENIT, ERROR DI DALAM POPUP) ==========
     async function loadAllData() {
+      if (isDataLoading) return;
+      isDataLoading = true;
+      
       document.getElementById('loadingArea').style.display = 'block';
       document.getElementById('errorArea').style.display = 'none';
       document.getElementById('tableArea').style.display = 'none';
       
-      sheetsList = await getSheets();
+      showLoadingWithProgress('Memuat Jadwal Ujian', ['Mengambil daftar sheet', 'Memuat data jadwal', 'Menyusun tabel']);
       
-      if (sheetsList.length === 0) {
-        document.getElementById('loadingArea').style.display = 'none';
-        document.getElementById('errorArea').style.display = 'block';
-        document.getElementById('errorArea').innerHTML = '<div class="error">❌ Tidak ada sheet ditemukan</div>';
-        return;
+      const timeoutId = setTimeout(() => {
+        if (isDataLoading) {
+          console.warn('Timeout loading jadwal ujian (60 detik)');
+          showErrorInLoadingPopup(
+            '⏰ Waktu Habis',
+            'Server tidak merespons dalam 1 menit.',
+            'Silakan periksa koneksi internet Anda lalu coba lagi.'
+          );
+          isDataLoading = false;
+        }
+      }, 60000);
+      
+      try {
+        sheetsList = await getSheets();
+        
+        if (sheetsList.length === 0) {
+          clearTimeout(timeoutId);
+          showErrorInLoadingPopup(
+            '❌ Afwan, Data Tidak Ditemukan',
+            'Tidak ada jadwal yang ditemukan atau koneksi buruk.',
+            'Silakan tekan tombol Refresh Data untuk memuat ulang jadwal!',
+            'Hubungi admin untuk memeriksa data jika jadwal belum dapat dimuat.'
+          );
+          isDataLoading = false;
+          return;
+        }
+        
+        for (const sheetName of sheetsList) {
+          sheetDataCache[sheetName] = await getSheetData(sheetName);
+        }
+        
+        clearTimeout(timeoutId);
+        
+        // Simpan hash data awal
+        lastDataHash = generateDataHash(sheetDataCache);
+        
+        completeLoading();
+        
+        setTimeout(() => {
+          createTabs(sheetsList);
+          currentSheet = sheetsList[0];
+          switchToSheet(currentSheet);
+          isDataLoading = false;
+        }, 500);
+      } catch (err) {
+        clearTimeout(timeoutId);
+        console.error('Error loadAllData:', err);
+        showErrorInLoadingPopup(
+          '❌ Gagal Memuat Data',
+          escapeHtml(err.message || 'Koneksi terputus.'),
+          'Silakan coba lagi atau muat ulang halaman.'
+        );
+        isDataLoading = false;
       }
-      
-      for (const sheetName of sheetsList) {
-        sheetDataCache[sheetName] = await getSheetData(sheetName);
-      }
-      
-      createTabs(sheetsList);
-      currentSheet = sheetsList[0];
-      await switchToSheet(currentSheet);
     }
     
     function createTabs(sheetNames) {
       const tabsContainer = document.getElementById('tabsContainer');
+      const currentActiveSheet = currentSheet; // simpan tab aktif
       tabsContainer.innerHTML = '';
       sheetNames.forEach((sheetName, index) => {
         const btn = document.createElement('button');
         btn.className = 'tab-btn';
-        if (index === 0) btn.classList.add('active');
+        // Pertahankan tab aktif jika memungkinkan
+        if (sheetName === currentActiveSheet || (index === 0 && !currentActiveSheet)) {
+          btn.classList.add('active');
+        }
         btn.textContent = sheetName;
         btn.onclick = () => switchSheet(sheetName, btn);
         tabsContainer.appendChild(btn);
@@ -1284,9 +1544,8 @@ menus.forEach(menu => {
       rawData = sheetData.data;
       rawMerges = sheetData.merges;
       
-      document.getElementById('searchInput').value = '';
-      document.getElementById('classFilter').innerHTML = '<option value="">Semua Kelas</option>';
-      
+      // Jangan reset search & class filter saat auto refresh
+      // hanya reset saat tab manual diganti
       updateClassFilter(rawData);
       renderTable();
     }
@@ -1329,6 +1588,7 @@ menus.forEach(menu => {
         }
       }
     }
+    
     function renderTableWithMerges(data, merges) {
       if (!data || data.length === 0) return  `
         <div style="text-align: center; padding: 60px 20px; background: #fef2f2; border-radius: 16px; border: 1px solid #fecaca;">
@@ -1467,10 +1727,138 @@ menus.forEach(menu => {
       return div.innerHTML;
     }
     
+    // ========== AUTO REFRESH ==========
+    
+    // Buat hash sederhana dari data untuk mendeteksi perubahan
+    function generateDataHash(cache) {
+      try {
+        return JSON.stringify(cache);
+      } catch (e) {
+        return String(Date.now());
+      }
+    }
+    
+    // Tampilkan badge "checking" saat sedang cek
+    function setAutoRefreshChecking(isChecking) {
+      const badge = document.getElementById('autoRefreshBadge');
+      if (!badge) return;
+      if (isChecking) badge.classList.add('checking');
+      else badge.classList.remove('checking');
+    }
+    
+    // Tampilkan toast notifikasi
+    let toastTimeout = null;
+    function showRefreshToast(message) {
+      const toast = document.getElementById('refreshToast');
+      if (!toast) return;
+      toast.querySelector('span').textContent = message || 'Data berhasil diperbarui!';
+      toast.classList.add('show');
+      
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+    
+    // Fungsi utama auto refresh (silent, tanpa popup)
+    async function autoRefreshData() {
+      // Skip jika sedang loading manual atau sedang auto cek
+      if (isDataLoading || isAutoChecking) return;
+      // Skip jika tab browser tidak aktif (hemat kuota)
+      if (document.hidden) return;
+      
+      isAutoChecking = true;
+      setAutoRefreshChecking(true);
+      
+      try {
+        // Ambil daftar sheet terbaru
+        const newSheets = await getSheets();
+        if (!newSheets || newSheets.length === 0) {
+          isAutoChecking = false;
+          setAutoRefreshChecking(false);
+          return;
+        }
+        
+        // Ambil data semua sheet secara paralel
+        const newCache = {};
+        await Promise.all(newSheets.map(async (name) => {
+          newCache[name] = await getSheetData(name);
+        }));
+        
+        // Bandingkan dengan cache lama
+        const newHash = generateDataHash(newCache);
+        
+        if (newHash !== lastDataHash) {
+          // Data berubah! Update cache & re-render
+          console.log('🔄 Auto refresh: data berubah, memperbarui tampilan...');
+          sheetsList = newSheets;
+          sheetDataCache = newCache;
+          lastDataHash = newHash;
+          
+          // Rebuild tabs (pertahankan tab aktif)
+          createTabs(sheetsList);
+          
+          // Jika currentSheet masih ada, refresh. Jika tidak, fallback ke sheet pertama
+          if (!sheetsList.includes(currentSheet)) {
+            currentSheet = sheetsList[0];
+            // Aktifkan tab pertama
+            document.querySelectorAll('.tab-btn').forEach((b, i) => {
+              b.classList.toggle('active', i === 0);
+            });
+          }
+          
+          // Update rawData & render ulang (filter & search tetap)
+          const sheetData = sheetDataCache[currentSheet];
+          if (sheetData) {
+            rawData = sheetData.data;
+            rawMerges = sheetData.merges;
+            updateClassFilter(rawData);
+            renderTable();
+          }
+          
+          // Update badge & toast
+          const badge = document.getElementById('autoRefreshBadge');
+          const badgeText = document.getElementById('autoRefreshText');
+          if (badgeText) badgeText.textContent = 'Baru saja';
+          setTimeout(() => {
+            if (badgeText) badgeText.textContent = 'Auto 30s';
+          }, 5000);
+          
+          showRefreshToast('📢 Data terbaru telah dimuat!');
+        } else {
+          console.log('✅ Auto refresh: tidak ada perubahan data');
+        }
+      } catch (err) {
+        console.warn('Auto refresh gagal:', err);
+        // Silent fail — jangan ganggu user dengan error
+      } finally {
+        isAutoChecking = false;
+        setAutoRefreshChecking(false);
+      }
+    }
+    
+    // Mulai interval auto refresh
+    function startAutoRefresh() {
+      stopAutoRefresh(); // pastikan tidak double
+      autoRefreshInterval = setInterval(autoRefreshData, AUTO_REFRESH_INTERVAL);
+      console.log(`⏱️ Auto refresh aktif: setiap ${AUTO_REFRESH_INTERVAL / 1000} detik`);
+    }
+    
+    // Hentikan interval auto refresh
+    function stopAutoRefresh() {
+      if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+        autoRefreshInterval = null;
+      }
+    }
+    
     // ========== INIT ==========
     loadSidebarState();
     loadStoredUser();
-    loadAllData();
+    loadAllData().then(() => {
+      // Mulai auto refresh setelah data awal berhasil dimuat
+      startAutoRefresh();
+    });
   </script>
 </body>
 </html>
