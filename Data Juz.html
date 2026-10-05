@@ -22,7 +22,7 @@
       max-width: 100%;
     }
     
-    /* ========== SIDEBAR (sama seperti sebelumnya) ========== */
+    /* ========== SIDEBAR ========== */
     .sidebar-overlay {
       position: fixed;
       top: 0;
@@ -154,7 +154,6 @@
       cursor: pointer;
     }
     
-    /* Tombol hamburger */
     .hamburger-btn {
       background: rgba(255,255,255,0.2);
       backdrop-filter: blur(10px);
@@ -230,6 +229,7 @@
       font-weight: 600;
       gap: 6px;
       margin-top: 10px;
+      align-items: center;
     }
     
     .filter-section {
@@ -338,7 +338,6 @@
       gap: 20px;
     }
     
-    /* Card biasa */
     .card {
       background: white;
       border-radius: 20px;
@@ -353,7 +352,6 @@
       box-shadow: 0 16px 30px rgba(46,125,50,0.15);
     }
     
-    /* Card spesial untuk hafal 30 Juz (Al-Hafizh) */
     .card.card-special {
       border: 2px solid transparent;
       background: linear-gradient(white, white) padding-box,
@@ -375,7 +373,6 @@
       overflow: hidden;
       border-radius: 20px 20px 0 0;
       padding-bottom: 5px;
-
     }
     
     .card-special .card-header::before {
@@ -421,7 +418,6 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
     
-    /* Progress bar untuk card spesial */
     .card-special .progress-fill {
       background: linear-gradient(90deg, #ffd700, #ffb347, #ff9800);
     }
@@ -437,17 +433,17 @@
       font-weight: bold;
     }
     
-.card-header h3 {
-  font-size: 1.2rem;
-  color: #1e3a2f;
-  display: flex;
-  align-items: center;
-  justify-content: center;  /* ← TAMBAHKAN BARIS INI */
-  gap: 10px;
-  flex-wrap: wrap;
-  text-align: center;       /* ← TAMBAHKAN BARIS INI */
-  padding-top: 4px;
-}
+    .card-header h3 {
+      font-size: 1.2rem;
+      color: #1e3a2f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      text-align: center;
+      padding-top: 4px;
+    }
     
     .card-header h3 i { color: #2e7d32; font-size: 1.3rem; }
     .card-body { padding: 20px; }
@@ -596,6 +592,7 @@
       .sidebar, .hamburger-btn, .tabs, .footer, .filter-section { display: none; }
     }
     
+    /* ========== LOADING OVERLAY ========== */
     .loading-overlay {
       position: fixed;
       top: 0;
@@ -607,13 +604,194 @@
       justify-content: center;
       align-items: center;
       z-index: 9999;
+      backdrop-filter: blur(3px);
+      pointer-events: auto;
+    }
+    
+    .loading-overlay.hidden {
+      display: none;
+      pointer-events: none;
     }
     
     .loading-card {
       background: white;
-      padding: 25px;
+      padding: 25px 35px;
       border-radius: 20px;
       text-align: center;
+      min-width: 260px;
+      max-width: 90%;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    
+    .loading-card h3 { color: #2d6a4f; margin-bottom: 15px; font-size: 1.1rem; }
+    
+    .progress-container {
+      width: 100%;
+      height: 10px;
+      background: #e9f5e6;
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #2d6a4f, #40916c, #52b788);
+      border-radius: 20px;
+      transition: width 0.3s ease;
+    }
+    
+    .loading-percent { font-size: 1.5rem; font-weight: bold; color: #2d6a4f; margin: 8px 0; }
+    .spinner { width: 40px; height: 40px; border: 3px solid #e9f5e6; border-top: 3px solid #2d6a4f; border-radius: 50%; margin: 0 auto 12px; animation: spin 0.8s linear infinite; }
+    .dots::after { content: ''; animation: dots 1.5s steps(4, end) infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes dots { 0%, 20% { content: ''; } 40% { content: '.'; } 60% { content: '..'; } 80%, 100% { content: '...'; } }
+    
+    /* ========== STYLE ERROR DI DALAM POPUP LOADING ========== */
+    .loading-card.error-state h3 {
+      color: #b91c1c;
+    }
+    
+    .loading-card .error-icon {
+      font-size: 48px;
+      color: #ef4444;
+      margin-bottom: 12px;
+      display: block;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.08); }
+    }
+    
+    .loading-card .error-message {
+      color: #7f1d1d;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+    
+    .loading-card .error-submessage {
+      color: #94a3b8;
+      font-size: 0.75rem;
+      margin-bottom: 18px;
+    }
+    
+    .loading-card .error-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .loading-card .error-actions button {
+      padding: 9px 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+    
+    .loading-card .error-actions .btn-retry {
+      background: #2d6a4f;
+      color: white;
+    }
+    
+    .loading-card .error-actions .btn-retry:hover {
+      background: #1e4a2f;
+      transform: translateY(-2px);
+    }
+    
+    .loading-card .error-actions .btn-reload {
+      background: #ff8a5c;
+      color: white;
+    }
+    
+    .loading-card .error-actions .btn-reload:hover {
+      background: #e67345;
+      transform: translateY(-2px);
+    }
+    
+    /* ========== AUTO REFRESH INDICATOR ========== */
+    .auto-refresh-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.15);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      margin-left: 8px;
+      color: rgba(255,255,255,0.9);
+      transition: all 0.3s;
+    }
+    
+    .auto-refresh-badge.checking {
+      background: rgba(255,255,255,0.35);
+    }
+    
+    .auto-refresh-badge .dot-indicator {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #52b788;
+      box-shadow: 0 0 6px #52b788;
+      animation: autoPulse 2s ease-in-out infinite;
+    }
+    
+    .auto-refresh-badge.checking .dot-indicator {
+      background: #ffb74d;
+      box-shadow: 0 0 6px #ffb74d;
+    }
+    
+    @keyframes autoPulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    
+    /* Toast notifikasi update data */
+    .refresh-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: linear-gradient(135deg, #2d6a4f 0%, #2e7d32 100%);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(46, 125, 50, 0.4);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+      pointer-events: none;
+    }
+    
+    .refresh-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    @media (max-width: 768px) {
+      .refresh-toast {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        font-size: 12px;
+        padding: 10px 16px;
+      }
     }
   </style>
 </head>
@@ -656,7 +834,13 @@
         </div>
         <h1>📊 Data Hafalan Santri</h1>
         <h4>Ma'had Tamaamul Minnah, Bengle - Karawang</h4>
-        <button class="header-refresh" onclick="loadAllData()"><i class="fas fa-sync-alt"></i> Refresh Data</button>
+        <button class="header-refresh" onclick="loadAllData()">
+          <i class="fas fa-sync-alt"></i> Refresh Data
+          <span class="auto-refresh-badge" id="autoRefreshBadge">
+            <span class="dot-indicator"></span>
+            <span id="autoRefreshText">Auto 30s</span>
+          </span>
+        </button>
       </div>
       
       <div class="filter-section">
@@ -697,6 +881,12 @@
     </div>
   </div>
   
+  <!-- Toast notifikasi update data -->
+  <div class="refresh-toast" id="refreshToast">
+    <i class="fas fa-check-circle"></i>
+    <span>Data berhasil diperbarui!</span>
+  </div>
+  
   <script>
     // ========== SIDEBAR TOGGLE ==========
     const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -735,6 +925,117 @@
         document.body.classList.add('sidebar-open');
         hamburgerBtn.innerHTML = '<i class="fas fa-times"></i>';
       }
+    }
+    
+    // ========== LOADING ==========
+    let activeTimeout = null;
+    let currentLoadingOverlay = null;
+    
+    function showLoadingWithProgress(title, steps = ['Menyiapkan', 'Memproses', 'Menyelesaikan']) {
+      hideLoading();
+      
+      window.currentProgress = 0;
+      let stepIndex = 0;
+      const overlay = document.createElement('div');
+      overlay.className = 'loading-overlay';
+      overlay.id = 'loadingOverlay';
+      overlay.innerHTML = `
+        <div class="loading-card" id="loadingCard">
+          <h3>${title}</h3>
+          <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+          <div class="loading-percent" id="loadingPercent">0%</div>
+          <div class="loading-step" id="loadingStep">${steps[0]}<span class="dots"></span></div>
+          <div class="loading-text" id="loadingText">Mohon tunggu sebentar...</div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+      currentLoadingOverlay = overlay;
+      
+      if (window.loadingInterval) clearInterval(window.loadingInterval);
+      window.loadingInterval = setInterval(() => {
+        if (window.currentProgress < 90) {
+          window.currentProgress += Math.random() * 8;
+          if (window.currentProgress > 90) window.currentProgress = 90;
+          updateProgress(window.currentProgress);
+        }
+        const newStepIndex = Math.floor(window.currentProgress / 30);
+        if (newStepIndex !== stepIndex && newStepIndex < steps.length) {
+          stepIndex = newStepIndex;
+          const stepEl = document.getElementById('loadingStep');
+          if (stepEl) stepEl.innerHTML = steps[stepIndex] + '<span class="dots"></span>';
+        }
+      }, 200);
+    }
+    
+    function updateProgress(percent) {
+      const progressBar = document.getElementById('progressBar');
+      const percentEl = document.getElementById('loadingPercent');
+      if (progressBar) progressBar.style.width = percent + '%';
+      if (percentEl) percentEl.innerHTML = Math.floor(percent) + '%';
+    }
+    
+    function completeLoading() {
+      if (window.loadingInterval) {
+        clearInterval(window.loadingInterval);
+        window.loadingInterval = null;
+      }
+      updateProgress(100);
+      setTimeout(() => { hideLoading(); }, 500);
+    }
+    
+    function hideLoading() {
+      if (window.loadingInterval) {
+        clearInterval(window.loadingInterval);
+        window.loadingInterval = null;
+      }
+      if (currentLoadingOverlay && currentLoadingOverlay.remove) {
+        currentLoadingOverlay.remove();
+      }
+      const existingOverlay = document.getElementById('loadingOverlay');
+      if (existingOverlay) existingOverlay.remove();
+      currentLoadingOverlay = null;
+    }
+    
+    // ========== TAMPILKAN ERROR DI DALAM POPUP LOADING ==========
+    function showErrorInLoadingPopup(title, message, submessage) {
+      if (window.loadingInterval) {
+        clearInterval(window.loadingInterval);
+        window.loadingInterval = null;
+      }
+      
+      const card = document.getElementById('loadingCard');
+      if (!card) {
+        showLoadingWithProgress(title);
+        setTimeout(() => showErrorInLoadingPopup(title, message, submessage), 50);
+        return;
+      }
+      
+      card.classList.add('error-state');
+      card.innerHTML = `
+        <i class="fas fa-exclamation-triangle error-icon"></i>
+        <h3>${title}</h3>
+        <p class="error-message">${message}</p>
+        <p class="error-submessage">${submessage || ''}</p>
+        <div class="error-actions">
+          <button class="btn-retry" onclick="retryFromPopup()">
+            <i class="fas fa-sync-alt"></i> Refresh Data
+          </button>
+          <button class="btn-reload" onclick="reloadFromPopup()">
+            <i class="fas fa-redo-alt"></i> Refresh Halaman
+          </button>
+        </div>
+      `;
+    }
+    
+    function retryFromPopup() {
+      hideLoading();
+      setTimeout(() => { loadAllData(); }, 200);
+    }
+    
+    function reloadFromPopup() {
+      location.reload();
     }
     
     // ========== LOGIN ==========
@@ -830,6 +1131,9 @@
         document.getElementById('loginErrorSidebar').innerHTML = 'Harap isi email/ID dan password';
         return;
       }
+      
+      showLoadingWithProgress('Login', ['Memeriksa akun', 'Verifikasi password', 'Mengambil data user']);
+      
       const callbackName = 'jsonp_callback_' + Date.now();
       window[callbackName] = function(response) {
         delete window[callbackName];
@@ -838,10 +1142,16 @@
           localStorage.setItem('tahfidz_user', JSON.stringify(currentUser));
           updateSidebarUI();
           renderNavSidebar();
-          hideLoginFormSidebar();
-          location.reload();
+          completeLoading();
+          setTimeout(() => {
+            hideLoginFormSidebar();
+            location.reload();
+          }, 800);
         } else {
-          document.getElementById('loginErrorSidebar').innerHTML = response.message || 'Login gagal';
+          completeLoading();
+          setTimeout(() => {
+            document.getElementById('loginErrorSidebar').innerHTML = response.message || 'Login gagal';
+          }, 800);
         }
       };
       const url = `${GAS_LOGIN_URL}?callback=${callbackName}&login=${encodeURIComponent(login)}&password=${encodeURIComponent(password)}`;
@@ -884,6 +1194,13 @@
     let currentSheet = '';
     let sheetDataCache = {};
     let rawData = null;
+    let isDataLoading = false;
+    
+    // ========== AUTO REFRESH VARIABEL ==========
+    let autoRefreshInterval = null;
+    const AUTO_REFRESH_INTERVAL = 30000; // 30 detik
+    let lastDataHash = '';
+    let isAutoChecking = false;
     
     const COL_INDEX = {
       NO: 0,
@@ -891,14 +1208,14 @@
       KELAS: 2,
       MARHALAH: 3,
       JUMLAH_JUZ: 4,
-      JUZ1: 5  // F = index 5, header 30
+      JUZ1: 5
     };
     
     function getHafalanJuz(row) {
       let hafalan = [];
       for (let colOffset = 0; colOffset < 30; colOffset++) {
         const colIndex = COL_INDEX.JUZ1 + colOffset;
-        const juzNum = 30 - colOffset; // 30,29,...,1
+        const juzNum = 30 - colOffset;
         if (colIndex < row.length) {
           const val = row[colIndex];
           if (val !== undefined && val !== null && val !== '') {
@@ -930,35 +1247,82 @@
       } catch(e) { return []; }
     }
     
+    // ========== LOAD ALL DATA (TIMEOUT 1 MENIT, ERROR DI DALAM POPUP) ==========
     async function loadAllData() {
+      if (isDataLoading) return;
+      isDataLoading = true;
+      
       document.getElementById('loadingArea').style.display = 'block';
       document.getElementById('cardsArea').style.display = 'none';
       document.getElementById('errorArea').style.display = 'none';
       
-      sheetsList = await getSheets();
-      if (sheetsList.length === 0) {
-        document.getElementById('loadingArea').style.display = 'none';
-        document.getElementById('errorArea').style.display = 'block';
-        document.getElementById('errorArea').innerHTML = '<div class="error">❌ Tidak ada sheet ditemukan</div>';
-        return;
-      }
+      showLoadingWithProgress('Memuat Data Hafalan', ['Mengambil daftar kelas', 'Memuat data hafalan', 'Menyusun data']);
       
-      for (const sheetName of sheetsList) {
-        sheetDataCache[sheetName] = await getSheetData(sheetName);
-      }
+      // Timeout 1 MENIT (60000 ms) → tampilkan error DI DALAM POPUP
+      const timeoutId = setTimeout(() => {
+        if (isDataLoading) {
+          console.warn('Timeout loading data hafalan (60 detik)');
+          showErrorInLoadingPopup(
+            '⏰ Waktu Habis',
+            'Server tidak merespons dalam 1 menit.',
+            'Silakan periksa koneksi internet Anda lalu coba lagi.'
+          );
+          isDataLoading = false;
+        }
+      }, 60000);
       
-      createTabs(sheetsList);
-      currentSheet = sheetsList[0];
-      await switchToSheet(currentSheet);
+      try {
+        sheetsList = await getSheets();
+        if (sheetsList.length === 0) {
+          clearTimeout(timeoutId);
+          showErrorInLoadingPopup(
+            '❌ Afwan! Data Juz Tidak Ditemukan.',
+            'Tidak ada data juz yang tersedia.',
+            'Silakan tekan tombol Refresh Data untuk memuat ulang data juz. Hubungi admin untuk memeriksa ketersediaan data!.'
+          );
+          isDataLoading = false;
+          return;
+        }
+        
+        for (const sheetName of sheetsList) {
+          sheetDataCache[sheetName] = await getSheetData(sheetName);
+        }
+        
+        clearTimeout(timeoutId);
+        
+        // Simpan hash data awal
+        lastDataHash = generateDataHash(sheetDataCache);
+        
+        completeLoading();
+        
+        setTimeout(() => {
+          createTabs(sheetsList);
+          currentSheet = sheetsList[0];
+          switchToSheet(currentSheet);
+          isDataLoading = false;
+        }, 500);
+      } catch (err) {
+        clearTimeout(timeoutId);
+        console.error('Error loadAllData:', err);
+        showErrorInLoadingPopup(
+          '❌ Gagal Memuat Data',
+          escapeHtml(err.message || 'Koneksi terputus.'),
+          'Silakan coba lagi atau muat ulang halaman.'
+        );
+        isDataLoading = false;
+      }
     }
     
     function createTabs(sheetNames) {
       const tabsContainer = document.getElementById('tabsContainer');
+      const currentActiveSheet = currentSheet;
       tabsContainer.innerHTML = '';
       sheetNames.forEach((sheetName, index) => {
         const btn = document.createElement('button');
         btn.className = 'tab-btn';
-        if (index === 0) btn.classList.add('active');
+        if (sheetName === currentActiveSheet || (index === 0 && !currentActiveSheet)) {
+          btn.classList.add('active');
+        }
         btn.textContent = sheetName;
         btn.onclick = () => switchSheet(sheetName, btn);
         tabsContainer.appendChild(btn);
@@ -978,14 +1342,11 @@
       
       rawData = sheetData;
       
-      // Reset search dan sort
+      // Reset search dan sort (hanya saat ganti tab manual)
       document.getElementById('searchInput').value = '';
       document.getElementById('sortOrder').value = 'default';
       
-      // Update filter kelas
       updateClassFilter();
-      
-      // Render kartu
       renderCards();
       document.getElementById('loadingArea').style.display = 'none';
       document.getElementById('cardsArea').style.display = 'block';
@@ -994,15 +1355,21 @@
     function updateClassFilter() {
       if (!rawData || rawData.length < 2) return;
       const classFilter = document.getElementById('classFilter');
+      const currentValue = classFilter.value;
       const uniqueClasses = new Set();
       for (let i = 1; i < rawData.length; i++) {
         const kelas = rawData[i][COL_INDEX.KELAS];
         if (kelas && kelas.toString().trim()) uniqueClasses.add(kelas.toString().trim());
       }
       classFilter.innerHTML = '<option value="">Semua Kelas</option>';
-      Array.from(uniqueClasses).sort().forEach(k => {
+      const sorted = Array.from(uniqueClasses).sort();
+      sorted.forEach(k => {
         classFilter.innerHTML += `<option value="${escapeHtml(k)}">${escapeHtml(k)}</option>`;
       });
+      // Kembalikan nilai filter jika masih ada
+      if (currentValue && sorted.includes(currentValue)) {
+        classFilter.value = currentValue;
+      }
     }
     
     function getFilteredAndSortedData() {
@@ -1074,25 +1441,21 @@
       }
       
       let html = '<div class="cards-grid">';
-// Cari bagian ini (sekitar baris 700-720)
-data.forEach(santri => {
-  const juzCount = santri.hafalanJuz.length;
-  const percent = (juzCount / 30) * 100;
-  const isSpecial = santri.isComplete;
-  
-  const cardClass = isSpecial ? 'card card-special' : 'card';
-
-// Pilih emoji berdasarkan status hafalan
-const emoji = isSpecial ? '🎓 ' : '📖 ';
-  html += `<div class="${cardClass}">`;
-  html += `<div class="card-header"><h3>${emoji} ${escapeHtml(santri.nama)}`;
-  
-  if (isSpecial) {
-    html += `<span class="badge-hafizh">Al-Hafizh 🏆</span>`;
-  }
-  
-  html += `</h3></div><div class="card-body">`;
-
+      data.forEach(santri => {
+        const juzCount = santri.hafalanJuz.length;
+        const percent = (juzCount / 30) * 100;
+        const isSpecial = santri.isComplete;
+        const cardClass = isSpecial ? 'card card-special' : 'card';
+        const emoji = isSpecial ? '🎓 ' : '📖 ';
+        
+        html += `<div class="${cardClass}">`;
+        html += `<div class="card-header"><h3>${emoji} ${escapeHtml(santri.nama)}`;
+        
+        if (isSpecial) {
+          html += `<span class="badge-hafizh">Al-Hafizh 🏆</span>`;
+        }
+        
+        html += `</h3></div><div class="card-body">`;
         html += `<div class="info-row"><span class="info-label"><i class="fas fa-book-open"></i> Kelas</span><span class="info-value">${escapeHtml(santri.kelas)}</span></div>`;
         html += `<div class="info-row"><span class="info-label"><i class="fas fa-chart-line"></i> Marhalah</span><span class="info-value">${escapeHtml(santri.marhalah)}</span></div>`;
         html += `<div class="progress-section"><div class="progress-bar-container"><div class="progress-fill" style="width: ${percent}%;"></div></div>`;
@@ -1142,10 +1505,115 @@ const emoji = isSpecial ? '🎓 ' : '📖 ';
       return div.innerHTML;
     }
     
+    // ========== AUTO REFRESH ==========
+    function generateDataHash(cache) {
+      try {
+        return JSON.stringify(cache);
+      } catch (e) {
+        return String(Date.now());
+      }
+    }
+    
+    function setAutoRefreshChecking(isChecking) {
+      const badge = document.getElementById('autoRefreshBadge');
+      if (!badge) return;
+      if (isChecking) badge.classList.add('checking');
+      else badge.classList.remove('checking');
+    }
+    
+    let toastTimeout = null;
+    function showRefreshToast(message) {
+      const toast = document.getElementById('refreshToast');
+      if (!toast) return;
+      toast.querySelector('span').textContent = message || 'Data berhasil diperbarui!';
+      toast.classList.add('show');
+      
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+    
+    async function autoRefreshData() {
+      if (isDataLoading || isAutoChecking) return;
+      
+      isAutoChecking = true;
+      setAutoRefreshChecking(true);
+      
+      try {
+        const newSheets = await getSheets();
+        if (!newSheets || newSheets.length === 0) {
+          isAutoChecking = false;
+          setAutoRefreshChecking(false);
+          return;
+        }
+        
+        const newCache = {};
+        await Promise.all(newSheets.map(async (name) => {
+          newCache[name] = await getSheetData(name);
+        }));
+        
+        const newHash = generateDataHash(newCache);
+        
+        if (newHash !== lastDataHash) {
+          console.log('🔄 Auto refresh: data hafalan berubah, memperbarui tampilan...');
+          sheetsList = newSheets;
+          sheetDataCache = newCache;
+          lastDataHash = newHash;
+          
+          createTabs(sheetsList);
+          
+          if (!sheetsList.includes(currentSheet)) {
+            currentSheet = sheetsList[0];
+            document.querySelectorAll('.tab-btn').forEach((b, i) => {
+              b.classList.toggle('active', i === 0);
+            });
+          }
+          
+          if (sheetDataCache[currentSheet]) {
+            rawData = sheetDataCache[currentSheet];
+            updateClassFilter();
+            renderCards();
+          }
+          
+          const badgeText = document.getElementById('autoRefreshText');
+          if (badgeText) badgeText.textContent = 'Baru saja';
+          setTimeout(() => {
+            if (badgeText) badgeText.textContent = 'Auto 30s';
+          }, 5000);
+          
+          showRefreshToast('📢 Data Hafalan terbaru telah dimuat!');
+        } else {
+          console.log('✅ Auto refresh: tidak ada perubahan data hafalan');
+        }
+      } catch (err) {
+        console.warn('Auto refresh gagal:', err);
+      } finally {
+        isAutoChecking = false;
+        setAutoRefreshChecking(false);
+      }
+    }
+    
+    function startAutoRefresh() {
+      stopAutoRefresh();
+      autoRefreshInterval = setInterval(autoRefreshData, AUTO_REFRESH_INTERVAL);
+      console.log(`⏱️ Auto refresh aktif: setiap ${AUTO_REFRESH_INTERVAL / 1000} detik (selama halaman dibuka)`);
+    }
+    
+    function stopAutoRefresh() {
+      if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+        autoRefreshInterval = null;
+      }
+    }
+    
     // ========== INIT ==========
     loadSidebarState();
     loadStoredUser();
-    loadAllData();
+    loadAllData().then(() => {
+      lastDataHash = generateDataHash(sheetDataCache);
+      startAutoRefresh();
+    });
   </script>
 </body>
 </html>
