@@ -896,7 +896,7 @@
         <h4>Ma'had Tamaamul Minnah, Bengle - Karawang</h4>
         
         <button class="header-refresh" onclick="loadAllData()">
-          <i class="fas fa-sync-alt"></i> Refresh Data
+          <i class="fas fa-sync-alt"></i> Refresh Jadwal
         </button>
       </div>
       
@@ -1108,7 +1108,7 @@
         <p class="error-submessage">${submessage || ''}</p>
         <div class="error-actions">
           <button class="btn-retry" onclick="retryFromPopup()">
-            <i class="fas fa-sync-alt"></i> Coba Lagi
+            <i class="fas fa-sync-alt"></i> Refresh Jadwal
           </button>
           <button class="btn-reload" onclick="reloadFromPopup()">
             <i class="fas fa-redo-alt"></i> Refresh Halaman
@@ -1605,7 +1605,7 @@
           showErrorInLoadingPopup(
             '❌ Afwan, Data Tidak Ditemukan',
             'Tidak ada jadwal yang ditemukan atau koneksi buruk.',
-            'Silakan tekan tombol Refresh Data untuk memuat ulang jadwal! Hubungi admin untuk memeriksa data jika jadwal belum dapat dimuat.'
+            'Silakan tekan tombol Refresh Jadwal untuk memuat ulang jadwal! Hubungi admin untuk memeriksa data jika jadwal belum dapat dimuat.'
           );
           isDataLoading = false;
           return;
@@ -1630,7 +1630,7 @@
         showErrorInLoadingPopup(
           '❌ Gagal Memuat Data',
           escapeHtml(err.message || 'Koneksi terputus.'),
-          'Silakan coba lagi atau muat ulang halaman.'
+          'Silakan Refresh Jadwal atau Refresh halaman.'
         );
         isDataLoading = false;
       }
