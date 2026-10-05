@@ -1583,7 +1583,7 @@
       document.getElementById('errorArea').style.display = 'none';
       document.getElementById('cardArea').style.display = 'none';
       
-      showLoadingWithProgress('Memuat Data Halaqoh', ['Mengambil daftar sheet', 'Memuat data sheet', 'Menyusun data']);
+      showLoadingWithProgress('Memuat Data Halaqoh', ['Mengambil daftar halaqoh', 'Memuat data halaqoh', 'Menyusun Halaqoh']);
       
       // Timeout 1 MENIT (60000 ms) → tampilkan error DI DALAM POPUP
       const timeoutId = setTimeout(() => {
@@ -1605,8 +1605,7 @@
           showErrorInLoadingPopup(
             '❌ Afwan, Data Tidak Ditemukan',
             'Tidak ada jadwal yang ditemukan atau koneksi buruk.',
-            'Silakan tekan tombol refresh untuk memuat ulang data!',
-            'Hubungi admin untuk memeriksa data jika jadwal masih belum bisa dimuat.'
+            'Silakan tekan tombol Refresh Data untuk memuat ulang jadwal! Hubungi admin untuk memeriksa data jika jadwal belum dapat dimuat.'
           );
           isDataLoading = false;
           return;
