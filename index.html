@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
     <title>Website Lajnah Tahfizh</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<!-- Favicon / Logo di Tab Browser -->
 <link rel="icon" type="image/png" sizes="32x32" href="pavicon.png">
 <link rel="icon" type="image/png" sizes="16x16" href="pavicon.png">
 <link rel="shortcut icon" href="pavicon.png" type="image/png">
 <link rel="apple-touch-icon" href="pavicon.png">
 <style>
-    /* KODE CSS ANDA TETAP SAMA PERSIS */
     * {
         margin: 0;
         padding: 0;
@@ -27,282 +25,13 @@
         width: 100%;
         max-width: 100%;
     }
-    
-    /* ========== LAYOUT SIDEBAR ========== */
-    .app-wrapper {
-        display: flex;
-        min-height: 100vh;
+
+    /* ========== KONTEN UTAMA ========== */
+    .main-container {
         width: 100%;
         max-width: 100%;
-        overflow-x: hidden !important;
-        position: relative;
     }
     
-    .sidebar-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        z-index: 998;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-    }
-    
-    .sidebar-overlay.active {
-        opacity: 1;
-        visibility: visible;
-    }
-    
-    /* SIDEBAR - DIPERBAIKI */
-    .sidebar {
-        position: fixed;
-        top: 5px;
-        left: -280px;
-        width: 280px;
-        height: 100%;
-        background: linear-gradient(135deg, #2d6a4f 0%, #2e7d32 50%, #2d6a4f 100%);
-        z-index: 999;
-        transition: left 0.3s ease;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .sidebar.open {
-        left: 0;
-    }
-    
-    .sidebar-header {
-        padding: 20px 16px;
-        text-align: center;
-        border-bottom: 1px solid rgba(255,255,255,0.2);
-        flex-shrink: 0;
-    }
-    
-    .sidebar-logo {
-        width: 55px;
-        height: 55px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-bottom: 8px;
-        border: 2px solid #ffd966;
-    }
-    
-    .sidebar-header h3 {
-        color: white;
-        font-size: 15px;
-        margin-bottom: 4px;
-    }
-    
-    .sidebar-header p {
-        color: rgba(255,255,255,0.7);
-        font-size: 10px;
-    }
-    
-    /* Navigasi Menu di Sidebar */
-/* Navigasi Menu di Sidebar */
-.sidebar-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 0 12px 16px 12px;
-    flex-shrink: 0;
-    margin-top: 10px; /* TAMBAHKAN - memberi jarak dari header */
-}
-
-    .sidebar-btn {
-        background: rgba(255,255,255,0.1);
-        border: 1px solid rgba(255,255,255,0.2);
-        color: white;
-        padding: 10px 14px;
-        border-radius: 10px;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 600;
-        transition: all 0.3s;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        text-align: left;
-        width: 100%;
-    }
-    
-    .sidebar-btn i {
-        width: 22px;
-        font-size: 16px;
-    }
-    
-    .sidebar-btn:hover {
-        background: rgba(255,255,255,0.25);
-        transform: translateX(5px);
-    }
-    
-    .sidebar-btn.active {
-        background: #ffb74d;
-        color: #1e3a2f;
-    }
-    
-    .sidebar-btn.active i {
-        color: #1e3a2f;
-    }
-    
-    /* Login Area di Sidebar - DIPERBAIKI */
-    .sidebar-footer {
-        padding: 12px 12px 18px 12px;
-        border-top: 1px solid rgba(255,255,255,0.15);
-        flex-shrink: 0;
-    }
-    
-    .user-status-sidebar {
-        background: rgba(255,255,255,0.12);
-        padding: 8px 10px;
-        border-radius: 10px;
-        font-size: 0.7rem;
-        margin-bottom: 10px;
-        text-align: center;
-        word-break: break-word;
-        color: white;
-    }
-    
-    .sidebar-login-buttons {
-        display: flex;
-        gap: 8px;
-    }
-    
-    .sidebar-login-buttons button {
-        flex: 1;
-        background: white;
-        color: #1e4a2f;
-        border: none;
-        padding: 8px 0;
-        border-radius: 10px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.2s;
-        font-size: 0.75rem;
-    }
-    
-    .sidebar-login-buttons button.logout-btn {
-        background: #ff8a5c;
-        color: white;
-    }
-    
-    .login-form-sidebar {
-        margin-top: 10px;
-    }
-    
-    .login-form-sidebar input {
-        width: 100%;
-        padding: 8px 10px;
-        margin-bottom: 8px;
-        border-radius: 10px;
-        border: none;
-        font-size: 0.75rem;
-    }
-    
-    .login-form-sidebar button {
-        width: 100%;
-        background: #ffb74d;
-        color: #1e3a2f;
-        border: none;
-        padding: 8px;
-        border-radius: 10px;
-        font-weight: bold;
-        margin-bottom: 5px;
-        cursor: pointer;
-        font-size: 0.75rem;
-    }
-    
-    .login-form-sidebar .cancel-login {
-        background: #6c757d;
-        color: white;
-    }
-    
-    .error-msg-sidebar {
-        color: #ffb3b3;
-        font-size: 0.65rem;
-        margin-top: 5px;
-        text-align: center;
-    }
-    
-    /* Tombol hamburger */
-    .hamburger-btn {
-        background: rgba(255,255,255,0.2);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255,255,255,0.3);
-        color: white;
-        width: 42px;
-        height: 42px;
-        border-radius: 10px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        transition: all 0.3s;
-        position: absolute;
-        left: 20px;
-        top: 20%;
-        transform: translateY(-50%);
-    }
-    
-    .hamburger-btn:hover {
-        background: rgba(255,255,255,0.3);
-        transform: translateY(-50%) scale(1.05);
-    }
-    
-    /* MAIN CONTENT */
-    .main-container {
-        transition: margin-left 0.3s ease;
-        width: 100%;
-    }
-    
-    @media (min-width: 769px) {
-        .sidebar-overlay {
-            display: block;
-        }
-        
-        body.sidebar-open .main-container {
-            margin-left: 280px;
-        }
-        
-        .main-container {
-            margin-left: 0;
-            transition: margin-left 0.3s ease;
-        }
-        
-        .hamburger-btn {
-            display: flex;
-        }
-    }
-    
-    @media (max-width: 768px) {
-        .hamburger-btn {
-            display: flex;
-        }
-        
-        .main-container {
-            margin-left: 0;
-        }
-        
-        .sidebar {
-            left: -280px;
-        }
-        
-        .sidebar.open {
-            left: 0;
-        }
-        
-        body.sidebar-open .main-container {
-            margin-left: 0;
-        }
-    }
-    
-    /* ========== STYLE KONTEN UTAMA ========== */
     .container {
         max-width: 1400px;
         margin: 20px auto;
@@ -351,6 +80,76 @@
         font-size: 12px;
         margin-bottom: 4px;
     }
+
+    /* ========== NAVIGASI MENU KOTAK ========== */
+    .nav-menu {
+        padding: 16px 16px 8px 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        border-bottom: 1px solid #e2e8f0;
+        background: #fbfdf9;
+    }
+
+    .nav-menu .nav-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #ffffff;
+        color: #1e3a2f;
+        border: 1px solid #d6e6d3;
+        border-radius: 10px;
+        padding: 7px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        text-decoration: none;
+        line-height: 1.2;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        box-shadow: 0 1px 2px rgba(46, 125, 50, 0.06);
+    }
+
+    .nav-menu .nav-btn:hover {
+        background: #2d6a4f;
+        color: #ffffff;
+        border-color: #2d6a4f;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(45, 106, 79, 0.25);
+    }
+
+    .nav-menu .nav-btn.active {
+        background: #2d6a4f;
+        color: #ffffff;
+        border-color: #2d6a4f;
+    }
+
+    .nav-menu .nav-btn.active:hover {
+        background: #245a42;
+    }
+
+    /* Baris khusus login/status */
+    .nav-auth {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-left: auto;
+    }
+
+    @media (max-width: 768px) {
+        .nav-menu {
+            padding: 12px 10px 6px 10px;
+            gap: 6px;
+        }
+        .nav-menu .nav-btn {
+            padding: 6px 10px;
+            font-size: 11px;
+        }
+    }
     
     .content {
         padding: 25px 20px !important;
@@ -368,7 +167,6 @@
         border-top: 1px solid #e2e8f0;
     }
     
-    /* Section styling */
     .section {
         display: none;
         overflow-x: hidden !important;
@@ -517,94 +315,123 @@
     @media (max-width: 768px) {
         .header h1 { font-size: 1.2em; }
         .content { padding: 18px 12px !important; }
-        .hamburger-btn {
-            width: 38px;
-            height: 38px;
-            left: 12px;
-        }
     }
     
     @media print {
         body { background: white; padding: 0; }
-        .sidebar, .hamburger-btn, .sidebar-overlay { display: none; }
-        .main-container { margin-left: 0; }
+        .nav-menu { display: none; }
         .container { box-shadow: none; border-radius: 0; margin: 0; }
     }
 
-.wa-btn {
-  display: inline-block;
-  background: linear-gradient(135deg, #25D366, #1ebe5d);
-  color: white;
-  padding: 4px 10px;
-  border-radius: 30px;
-  text-decoration: none;
-  font-family: 'Segoe UI', 'Poppins', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
-}
+    .wa-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #25D366, #1ebe5d);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-family: 'Segoe UI', 'Poppins', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
 
-/* Efek hover */
-.wa-btn:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.3);
-  background: linear-gradient(135deg, #1ebe5d, #25D366);
-}
+    .wa-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+      background: linear-gradient(135deg, #1ebe5d, #25D366);
+    }
 
-/* Efek klik */
-.wa-btn:active {
-  transform: scale(0.97);
-}
+    .wa-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Login form di navbar */
+    .login-form-inline {
+        display: none;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 8px 12px;
+        background: #f0f7e8;
+        border-radius: 10px;
+        width: 100%;
+    }
+
+    .login-form-inline input {
+        padding: 6px 10px;
+        border-radius: 8px;
+        border: 1px solid #c8dcc4;
+        font-size: 12px;
+        font-family: inherit;
+        outline: none;
+        min-width: 0;
+        flex: 1 1 120px;
+    }
+
+    .login-form-inline button {
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: none;
+        background: #2d6a4f;
+        color: white;
+        font-weight: 600;
+        font-size: 12px;
+        cursor: pointer;
+        font-family: inherit;
+    }
+
+    .login-form-inline .cancel-btn {
+        background: #94a3b8;
+    }
+
+    .error-msg-inline {
+        color: #c62828;
+        font-size: 11px;
+        width: 100%;
+        text-align: center;
+        margin-top: 4px;
+    }
+
+    .user-status-inline {
+        font-size: 11px;
+        color: #2d6a4f;
+        background: #e9f5e6;
+        padding: 6px 12px;
+        border-radius: 10px;
+        font-weight: 600;
+    }
 </style>
 </head>
 <body>
-    <!-- Overlay -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <img src="logo.png" alt="Logo" class="sidebar-logo" onerror="this.src='https://via.placeholder.com/60'">
-            <h3>Lajnah Tahfizh</h3>
-            <p>Ma'had Tamaamul Minnah, Bengle - Karawang</p>
-        </div>
-        
-        <!-- Menu Navigasi - LANGSUNG DI BAWAH HEADER -->
-        <div class="sidebar-buttons" id="sidebarNavMenu"></div>
-        
-        <!-- Area Login - LANGSUNG DI BAWAH MENU -->
-        <div class="sidebar-footer">
-            <div id="userStatusSidebar" class="user-status-sidebar"></div>
-            <div id="sidebarLoginArea">
-                <div class="sidebar-login-buttons" id="sidebarBtnGroup">
-                    <button id="sidebarLoginBtn" onclick="showLoginFormSidebar()">Login</button>
-                    <button id="sidebarLogoutBtn" onclick="logout()" style="display:none;" class="logout-btn">Logout</button>
-                </div>
-                <div id="loginFormSidebar" class="login-form-sidebar" style="display:none;">
-                    <input type="text" id="loginEmailSidebar" placeholder="Email atau ID">
-                    <input type="password" id="loginPasswordSidebar" placeholder="Password">
-                    <button onclick="doLoginFromSidebar()">Masuk</button>
-                    <button onclick="hideLoginFormSidebar()" class="cancel-login">Batal</button>
-                    <div id="loginErrorSidebar" class="error-msg-sidebar"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
     <!-- Konten Utama -->
     <div class="main-container" id="mainContainer">        
         <div class="container">
             <div class="header">
-                <button class="hamburger-btn" id="hamburgerBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                
                 <div class="logo-circle">
                     <img src="logo.png" alt="Logo" class="header-logo" onerror="this.src='https://via.placeholder.com/70'">
                 </div>
                 <h1>Lajnah Tahfizh</h1>
                 <h4>Ma'had Tamaamul Minnah - Bengle, Karawang</h4>
+            </div>
+
+            <!-- NAVIGASI MENU KOTAK (menggantikan sidebar) -->
+            <div class="nav-menu" id="navMenuContainer">
+                <div class="nav-menu-items" id="navMenuItems" style="display:contents;"></div>
+                <div class="nav-auth" id="navAuthArea">
+                    <span id="userStatusInline" class="user-status-inline" style="display:none;"></span>
+                    <button id="navLoginBtn" class="nav-btn" onclick="showLoginFormInline()">🔐 Login</button>
+                    <button id="navLogoutBtn" class="nav-btn" onclick="logout()" style="display:none;">🚪 Logout</button>
+                </div>
+                <div class="login-form-inline" id="loginFormInline">
+                    <input type="text" id="loginEmailInline" placeholder="Email atau ID">
+                    <input type="password" id="loginPasswordInline" placeholder="Password">
+                    <button onclick="doLoginFromInline()">Masuk</button>
+                    <button onclick="hideLoginFormInline()" class="cancel-btn">Batal</button>
+                    <div id="loginErrorInline" class="error-msg-inline"></div>
+                </div>
             </div>
             
             <div class="content">
@@ -695,134 +522,6 @@ Semoga Allah menjadikan Al-Qur’an sebagai penyejuk hati kita, cahaya dalam dad
     </div>
 
     <script>
-        // ========== SIDEBAR TOGGLE (DIPERBAIKI UNTUK MOBILE) ==========
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        
-        function toggleSidebar() {
-            sidebar.classList.toggle('open');
-            sidebarOverlay.classList.toggle('active');
-            
-            const isOpen = sidebar.classList.contains('open');
-            localStorage.setItem('sidebarState', isOpen ? 'open' : 'closed');
-            
-            if (isOpen) {
-                document.body.classList.add('sidebar-open');
-                if (hamburgerBtn) hamburgerBtn.innerHTML = '<i class="fas fa-times"></i>';
-                // Cegah scroll body saat sidebar terbuka di mobile
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.classList.remove('sidebar-open');
-                if (hamburgerBtn) hamburgerBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                document.body.style.overflow = '';
-            }
-        }
-        
-        function closeSidebar() {
-            sidebar.classList.remove('open');
-            sidebarOverlay.classList.remove('active');
-            document.body.classList.remove('sidebar-open');
-            document.body.style.overflow = '';
-            localStorage.setItem('sidebarState', 'closed');
-            if (hamburgerBtn) hamburgerBtn.innerHTML = '<i class="fas fa-bars"></i>';
-        }
-        
-        function loadSidebarState() {
-            const savedState = localStorage.getItem('sidebarState');
-            const isDesktop = window.innerWidth > 768;
-            
-            if (savedState === 'open' && isDesktop) {
-                sidebar.classList.add('open');
-                sidebarOverlay.classList.add('active');
-                if (hamburgerBtn) hamburgerBtn.innerHTML = '<i class="fas fa-times"></i>';
-                document.body.classList.add('sidebar-open');
-            } else {
-                sidebar.classList.remove('open');
-                sidebarOverlay.classList.remove('active');
-                if (hamburgerBtn) hamburgerBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                document.body.classList.remove('sidebar-open');
-            }
-        }
-        
-        if (hamburgerBtn) {
-            hamburgerBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleSidebar();
-            });
-        }
-        
-        // PERBAIKAN UTAMA: Event handler untuk overlay yang lebih robust
-        if (sidebarOverlay) {
-            // Hapus semua event listener lama dengan clone & replace
-            const newOverlay = sidebarOverlay.cloneNode(true);
-            sidebarOverlay.parentNode.replaceChild(newOverlay, sidebarOverlay);
-            window.sidebarOverlay = newOverlay;
-            
-            // Tambahkan event listener baru untuk klik dan sentuh
-            newOverlay.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                closeSidebar();
-            });
-            
-            // Untuk perangkat touch, tambahkan touchstart
-            newOverlay.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                closeSidebar();
-            });
-        }
-        
-        // Event untuk menutup sidebar jika klik di area konten utama (opsional)
-        const mainContainer = document.getElementById('mainContainer');
-        if (mainContainer) {
-            mainContainer.addEventListener('click', function(e) {
-                // Jika sidebar terbuka dan target bukan dari sidebar atau hamburger
-                if (sidebar.classList.contains('open')) {
-                    // Cek apakah klik berasal dari dalam sidebar atau hamburger
-                    if (!sidebar.contains(e.target) && e.target !== hamburgerBtn && !hamburgerBtn.contains(e.target)) {
-                        closeSidebar();
-                    }
-                }
-            });
-            
-            // Untuk perangkat touch
-            mainContainer.addEventListener('touchstart', function(e) {
-                if (sidebar.classList.contains('open')) {
-                    if (!sidebar.contains(e.target) && e.target !== hamburgerBtn && !hamburgerBtn.contains(e.target)) {
-                        closeSidebar();
-                    }
-                }
-            });
-        }
-        
-        window.addEventListener('resize', () => {
-            const isDesktop = window.innerWidth > 768;
-            const savedState = localStorage.getItem('sidebarState');
-            
-            if (isDesktop) {
-                if (savedState === 'open') {
-                    sidebar.classList.add('open');
-                    document.body.classList.add('sidebar-open');
-                    if (hamburgerBtn) hamburgerBtn.innerHTML = '<i class="fas fa-times"></i>';
-                } else {
-                    sidebar.classList.remove('open');
-                    document.body.classList.remove('sidebar-open');
-                    if (hamburgerBtn) hamburgerBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                }
-                sidebarOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-            } else {
-                // Di mobile, pastikan scroll body normal saat resize
-                if (!sidebar.classList.contains('open')) {
-                    document.body.style.overflow = '';
-                }
-                sidebarOverlay.classList.remove('active');
-            }
-        });
-        
         // ========== LOADING ==========
         let loadingInterval = null;
         let currentProgress = 0;
@@ -886,96 +585,90 @@ Semoga Allah menjadikan Al-Qur’an sebagai penyejuk hati kita, cahaya dalam dad
         
         let currentUser = null;
         
-    const menuForRole = {
-      public: [
-        { id: 'home', label: '🏠 Beranda', type: 'link', url: 'index.html' },
-        { id: 'informasi', label: '📢 Informasi Tahfizh', type: 'link', url: 'Informasi.html' },
-        { id: 'nasihat', label: '💡 Nasihat & Motivasi', type: 'link', url: 'Nasihat.html' },
-        { id: 'program', label: '📚 Program Tahfiz', type: 'link', url: 'Program Tahfiz.html' },
-        { id: 'alumni', label: '🎓 Alumni', type: 'link', url: 'Alumni.html' },
-        { id: 'Musammi', label: '💼 Musammi', type: 'link', url: 'Musammi.html' },
-        { id: 'dataJuz', label: '📊 Data Hafalan', type: 'link', url: 'Data Juz.html' },
-        { id: 'halaqoh', label: '📖 Halaqoh', type: 'link', url: 'Halaqoh.html' },
-        { id: 'jadwalUjian', label: '📅 Jadwal Ujian', type: 'link', url: 'Pajangan Jadwal Ujian.html' },
-        { id: 'tajwid', label: '💎 Materi Tajwid', type: 'link', url: 'Tajwid.html' },
-        { id: 'Lajnah', label: '💻 Lajnah Tahfidz', type: 'section', target: 'LajnahSection' }
-      ],
-      admin_biasa: [
-        { id: 'home', label: '🏠 Beranda', type: 'link', url: 'index.html' },
-        { id: 'informasi', label: '📢 Informasi Tahfizh', type: 'link', url: 'Informasi.html' },
-        { id: 'nasihat', label: '💡 Nasihat & Motivasi', type: 'link', url: 'Nasihat.html' },
-        { id: 'program', label: '📚 Program Tahfiz', type: 'link', url: 'Program Tahfiz.html' },
-        { id: 'alumni', label: '🎓 Alumni', type: 'link', url: 'Alumni.html' },
-        { id: 'Musammi', label: '💼 Musammi', type: 'link', url: 'Musammi.html' },
-        { id: 'dataJuz', label: '📊 Data Hafalan', type: 'link', url: 'Data Juz.html' },
-        { id: 'halaqoh', label: '📖 Halaqoh', type: 'link', url: 'Halaqoh.html' },
-        { id: 'jadwalUjian', label: '📅 Jadwal Ujian', type: 'link', url: 'Pajangan Jadwal Ujian.html' },
-        { id: 'tajwid', label: '💎 Materi Tajwid', type: 'link', url: 'Tajwid.html' },
-        { id: 'jadwalPenguji', label: '📋 Jadwal Penguji', type: 'link', url: 'Pajangan Jadwal Penguji.html' },
-        { id: 'votingPenguji', label: '🗳️ Voting Penguji', type: 'link', url: 'Voting Penguji.html' },
-        { id: 'panduan', label: '📘 Panduan Tahfizh', type: 'section', target: 'panduanSection' },
-        { id: 'Lajnah', label: '💻 Lajnah Tahfidz', type: 'section', target: 'LajnahSection' }
-      ],
-      super_admin: [
-        { id: 'home', label: '🏠 Beranda', type: 'link', url: 'index.html' },
-        { id: 'informasi', label: '📢 Informasi Tahfizh', type: 'link', url: 'Informasi.html' },
-        { id: 'nasihat', label: '💡 Nasihat & Motivasi', type: 'link', url: 'Nasihat.html' },
-        { id: 'program', label: '📚 Program Tahfiz', type: 'link', url: 'Program Tahfiz.html' },
-        { id: 'alumni', label: '🎓 Alumni', type: 'link', url: 'Alumni.html' },
-        { id: 'Musammi', label: '💼 Musammi', type: 'link', url: 'Musammi.html' },
-        { id: 'dataJuz', label: '📊 Data Hafalan', type: 'link', url: 'Data Juz.html' },
-        { id: 'halaqoh', label: '📖 Halaqoh', type: 'link', url: 'Halaqoh.html' },
-        { id: 'jadwalUjian', label: '📅 Jadwal Ujian', type: 'link', url: 'Pajangan Jadwal Ujian.html' },
-        { id: 'tajwid', label: '💎 Materi Tajwid', type: 'link', url: 'Tajwid.html' },
-        { id: 'panduan', label: '📘 Panduan Tahfizh', type: 'section', target: 'panduanSection' },
-        { id: 'jadwalPenguji', label: '📋 Jadwal Penguji', type:'link', url: 'Pajangan Jadwal Penguji.html' },
-        { id: 'votingPenguji', label: '🗳️ Voting Penguji', type: 'link', url: 'Voting Penguji.html' },
-        { id: 'buatJadwalUjian', label: '✏️ Buat Jadwal Ujian', type:'link', url: 'Jadwal Ujian Generator.html' },
-        { id: 'buatJadwalPenguji', label: '📝 Buat Jadwal Penguji', type:'link', url: 'Jadwal Penguji Generator.html' },
-        { id: 'Lajnah', label: '💻 Lajnah Tahfidz', type: 'section', target: 'LajnahSection' }
-      ]
-    };
+        const menuForRole = {
+          public: [
+            { id: 'home', label: '🏠 Beranda', type: 'link', url: 'index.html' },
+            { id: 'informasi', label: '📢 Informasi', type: 'link', url: 'Informasi.html' },
+            { id: 'nasihat', label: '💡 Nasihat', type: 'link', url: 'Nasihat.html' },
+            { id: 'program', label: '📚 Program', type: 'link', url: 'Program Tahfiz.html' },
+            { id: 'alumni', label: '🎓 Alumni', type: 'link', url: 'Alumni.html' },
+            { id: 'Musammi', label: '💼 Musammi', type: 'link', url: 'Musammi.html' },
+            { id: 'dataJuz', label: '📊 Data Hafalan', type: 'link', url: 'Data Juz.html' },
+            { id: 'halaqoh', label: '📖 Halaqoh', type: 'link', url: 'Halaqoh.html' },
+            { id: 'jadwalUjian', label: '📅 Jadwal Ujian', type: 'link', url: 'Pajangan Jadwal Ujian.html' },
+            { id: 'tajwid', label: '💎 Tajwid', type: 'link', url: 'Tajwid.html' },
+            { id: 'Lajnah', label: '💻 Lajnah', type: 'section', target: 'LajnahSection' }
+          ],
+          admin_biasa: [
+            { id: 'home', label: '🏠 Beranda', type: 'link', url: 'index.html' },
+            { id: 'informasi', label: '📢 Informasi', type: 'link', url: 'Informasi.html' },
+            { id: 'nasihat', label: '💡 Nasihat', type: 'link', url: 'Nasihat.html' },
+            { id: 'program', label: '📚 Program', type: 'link', url: 'Program Tahfiz.html' },
+            { id: 'alumni', label: '🎓 Alumni', type: 'link', url: 'Alumni.html' },
+            { id: 'Musammi', label: '💼 Musammi', type: 'link', url: 'Musammi.html' },
+            { id: 'dataJuz', label: '📊 Data Hafalan', type: 'link', url: 'Data Juz.html' },
+            { id: 'halaqoh', label: '📖 Halaqoh', type: 'link', url: 'Halaqoh.html' },
+            { id: 'jadwalUjian', label: '📅 Jadwal Ujian', type: 'link', url: 'Pajangan Jadwal Ujian.html' },
+            { id: 'tajwid', label: '💎 Tajwid', type: 'link', url: 'Tajwid.html' },
+            { id: 'jadwalPenguji', label: '📋 Jadwal Penguji', type: 'link', url: 'Pajangan Jadwal Penguji.html' },
+            { id: 'votingPenguji', label: '🗳️ Voting', type: 'link', url: 'Voting Penguji.html' },
+            { id: 'panduan', label: '📘 Panduan', type: 'section', target: 'panduanSection' },
+            { id: 'Lajnah', label: '💻 Lajnah', type: 'section', target: 'LajnahSection' }
+          ],
+          super_admin: [
+            { id: 'home', label: '🏠 Beranda', type: 'link', url: 'index.html' },
+            { id: 'informasi', label: '📢 Informasi', type: 'link', url: 'Informasi.html' },
+            { id: 'nasihat', label: '💡 Nasihat', type: 'link', url: 'Nasihat.html' },
+            { id: 'program', label: '📚 Program', type: 'link', url: 'Program Tahfiz.html' },
+            { id: 'alumni', label: '🎓 Alumni', type: 'link', url: 'Alumni.html' },
+            { id: 'Musammi', label: '💼 Musammi', type: 'link', url: 'Musammi.html' },
+            { id: 'dataJuz', label: '📊 Data Hafalan', type: 'link', url: 'Data Juz.html' },
+            { id: 'halaqoh', label: '📖 Halaqoh', type: 'link', url: 'Halaqoh.html' },
+            { id: 'jadwalUjian', label: '📅 Jadwal Ujian', type: 'link', url: 'Pajangan Jadwal Ujian.html' },
+            { id: 'tajwid', label: '💎 Tajwid', type: 'link', url: 'Tajwid.html' },
+            { id: 'panduan', label: '📘 Panduan', type: 'section', target: 'panduanSection' },
+            { id: 'jadwalPenguji', label: '📋 Jadwal Penguji', type:'link', url: 'Pajangan Jadwal Penguji.html' },
+            { id: 'votingPenguji', label: '🗳️ Voting', type: 'link', url: 'Voting Penguji.html' },
+            { id: 'buatJadwalUjian', label: '✏️ Buat Jadwal Ujian', type:'link', url: 'Jadwal Ujian Generator.html' },
+            { id: 'buatJadwalPenguji', label: '📝 Buat Jadwal Penguji', type:'link', url: 'Jadwal Penguji Generator.html' },
+            { id: 'Lajnah', label: '💻 Lajnah', type: 'section', target: 'LajnahSection' }
+          ]
+        };
 
-        
-// Di semua file HTML selain index.html
-function renderNavSidebar() {
-    const navContainer = document.getElementById('sidebarNavMenu');
-    if (!navContainer) return;
-    navContainer.innerHTML = '';
-    
-    let menus = menuForRole.public;
-    if (currentUser) {
-        menus = (currentUser.role === 'super_admin') ? menuForRole.super_admin : menuForRole.admin_biasa;
-    }
-    
-    menus.forEach(menu => {
-        const btn = document.createElement('button');
-        btn.className = 'sidebar-btn';
-        btn.setAttribute('data-id', menu.id);
-        btn.innerHTML = `${menu.label}`;
-        
-        if (menu.type === 'link') {
-            btn.onclick = () => {
-                window.location.href = menu.url;
-                closeSidebar();
-            };
-        } else if (menu.type === 'section') {
-            btn.onclick = () => {
-                // 🔥 KUNCI PERBAIKAN: Simpan target ke localStorage
-                localStorage.setItem('targetSection', menu.target);
-                // Arahkan ke index.html
-                window.location.href = 'index.html';
-                closeSidebar();
-            };
+        // Render menu kotak
+        function renderNavMenu() {
+            const navContainer = document.getElementById('navMenuItems');
+            if (!navContainer) return;
+            navContainer.innerHTML = '';
+            
+            let menus = menuForRole.public;
+            if (currentUser) {
+                menus = (currentUser.role === 'super_admin') ? menuForRole.super_admin : menuForRole.admin_biasa;
+            }
+            
+            menus.forEach(menu => {
+                const btn = document.createElement('button');
+                btn.className = 'nav-btn';
+                btn.setAttribute('data-id', menu.id);
+                btn.innerHTML = `${menu.label}`;
+                
+                if (menu.type === 'link') {
+                    btn.onclick = () => {
+                        window.location.href = menu.url;
+                    };
+                } else if (menu.type === 'section') {
+                    btn.onclick = () => {
+                        localStorage.setItem('targetSection', menu.target);
+                        window.location.href = 'index.html';
+                    };
+                }
+                
+                navContainer.appendChild(btn);
+            });
         }
-        
-        navContainer.appendChild(btn);
-    });
-}
-
 
         function setActiveNav(activeId) {
-            const btns = document.querySelectorAll('#sidebarNavMenu .sidebar-btn');
+            const btns = document.querySelectorAll('#navMenuItems .nav-btn');
             btns.forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.getAttribute('data-id') === activeId) {
@@ -999,279 +692,268 @@ function renderNavSidebar() {
             }
         }
         
-function loadPanduan() {
-    const panduanDiv = document.getElementById('panduanContent');
-    showLoadingWithProgress('Memuat Panduan Tahfizh', ['Menghubungi server', 'Mengambil dokumen']);
-    
-    const callbackName = 'panduan_callback_' + Date.now();
-    window[callbackName] = function(response) {
-        delete window[callbackName];
-        const script = document.getElementById('panduanScript_' + callbackName);
-        if (script) script.remove();
-        
-        if (response.success) {
-            completeLoading(true);
-            setTimeout(() => { 
-                panduanDiv.innerHTML = '';
+        function loadPanduan() {
+            const panduanDiv = document.getElementById('panduanContent');
+            showLoadingWithProgress('Memuat Panduan Tahfizh', ['Menghubungi server', 'Mengambil dokumen']);
+            
+            const callbackName = 'panduan_callback_' + Date.now();
+            window[callbackName] = function(response) {
+                delete window[callbackName];
+                const script = document.getElementById('panduanScript_' + callbackName);
+                if (script) script.remove();
                 
-                const iframe = document.createElement('iframe');
-                iframe.style.width = '100%';
-                iframe.style.border = 'none';
-                iframe.style.overflow = 'auto';
-                iframe.style.background = 'white';
-                iframe.style.margin = '0';
-                iframe.style.padding = '0';
-                iframe.style.display = 'block';
-                
-                panduanDiv.appendChild(iframe);
-                
-                // ========== FILTER KONTEN ==========
-                let content = response.content;
-                
-                // Hapus teks yang tidak diinginkan
-                content = content.replace(/Published\s+using\s+Google\s+Docs/gi, '');
-                content = content.replace(/Report\s+abuse/gi, '');
-                content = content.replace(/Learn\s+more/gi, '');
-                content = content.replace(/Updated\s+automatically\s+every\s+\d+\s+minutes/gi, '');
-                content = content.replace(/Panduan\s+Tahfiz\s+TMB/gi, '');
-                
-                // Hapus tag footer dan div yang tidak diinginkan
-                content = content.replace(/<footer[\s\S]*?<\/footer>/gi, '');
-                content = content.replace(/<div[^>]*class="[^"]*(?:footer|publishing|google)[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '');
-                
-                // Hapus elemen menggunakan DOM parser
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = content;
-                
-                // Hapus elemen berdasarkan teks
-                const elementsToRemove = [
-                    'Published using Google Docs',
-                    'Report abuse',
-                    'Learn more',
-                    'Updated automatically every'
-                ];
-                
-                elementsToRemove.forEach(text => {
-                    // Cari semua elemen yang mengandung teks
-                    const allElements = tempDiv.querySelectorAll('*');
-                    allElements.forEach(el => {
-                        if (el.textContent && el.textContent.includes(text)) {
-                            el.remove();
-                        }
-                    });
-                });
-                
-                // Hapus elemen dengan class tertentu
-                const classSelectors = ['.docs-footer', '.publishing', '.google-docs-footer', '.footer'];
-                classSelectors.forEach(selector => {
-                    const elements = tempDiv.querySelectorAll(selector);
-                    elements.forEach(el => el.remove());
-                });
-                
-                // Hapus link ke Google
-                const allLinks = tempDiv.querySelectorAll('a');
-                allLinks.forEach(link => {
-                    if (link.href && (link.href.includes('google.com') || link.href.includes('policies'))) {
-                        link.remove();
-                    }
-                });
-                
-                content = tempDiv.innerHTML;
-                
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                iframeDoc.open();
-                iframeDoc.write(`
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <style>
-                            body {
-                                font-family: 'Segoe UI', 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
-                                color: #1e3a2f;
-                                background: white;
-                                padding: 0 !important;
-                                margin: 0 !important;
-                                line-height: 1.6;
-                            }
-                            
-                            .panduan-wrapper {
-                                padding: 15px 20px !important;
-                                max-width: 100% !important;
-                                box-sizing: border-box !important;
-                            }
-                            
-                            /* Sembunyikan elemen yang mungkin masih tersisa */
-                            .docs-footer, .publishing, .google-docs-footer, .footer {
-                                display: none !important;
-                            }
-                            
-                            h1, h2, h3, h4, h5, h6 {
-                                color: #2d6a4f;
-                                margin: 20px 0 12px 0;
-                                font-weight: bold;
-                            }
-                            
-                            h1 {
-                                font-size: 1.8rem;
-                                padding-bottom: 8px;
-                            }
-                            
-                            h2 {
-                                font-size: 1.5rem;
-                                padding-bottom: 6px;
-                            }
-                            
-                            h3 {
-                                font-size: 1.3rem;
-                                color: #2e7d32;
-                            }
-                            
-                            p {
-                                margin-bottom: 12px;
-                            }
-                            
-                            ul, ol {
-                                padding-left: 25px;
-                                margin: 10px 0 15px 0;
-                            }
-                            
-                            li {
-                                margin-bottom: 5px;
-                            }
-                            
-                            table {
-                                display: block;
-                                width: 100%;
-                                overflow-x: auto;
-                                border-collapse: collapse;
-                                margin: 15px 0;
-                            }
-                            
-                            table td, table th {
-                                border: 1px solid #cbd5e1;
-                                padding: 8px 12px;
-                            }
-                            
-                            table th {
-                                background: #e9f5e6;
-                            }
-                            
-                            img {
-                                max-width: 100%;
-                                height: auto;
-                            }
-                            
-                            a {
-                                color: #2d6a4f;
-                                text-decoration: none;
-                            }
-                            
-                            a:hover {
-                                text-decoration: underline;
-                            }
-                            
-                            blockquote {
-                                border-left: 4px solid #2d6a4f;
-                                margin: 15px 0;
-                                padding: 10px 20px;
-                                background: #f0f7e8;
-                                font-style: italic;
-                            }
-                            
-                            pre, code {
-                                background: #f8fafc;
-                                border-radius: 6px;
-                                font-family: monospace;
-                            }
-                            
-                            pre {
-                                padding: 12px;
-                                overflow-x: auto;
-                            }
-                            
-                            /* Media Query untuk mobile */
-                            @media (max-width: 768px) {
-                                .panduan-wrapper {
-                                    padding: 10px 12px !important;
+                if (response.success) {
+                    completeLoading(true);
+                    setTimeout(() => { 
+                        panduanDiv.innerHTML = '';
+                        
+                        const iframe = document.createElement('iframe');
+                        iframe.style.width = '100%';
+                        iframe.style.border = 'none';
+                        iframe.style.overflow = 'auto';
+                        iframe.style.background = 'white';
+                        iframe.style.margin = '0';
+                        iframe.style.padding = '0';
+                        iframe.style.display = 'block';
+                        
+                        panduanDiv.appendChild(iframe);
+                        
+                        let content = response.content;
+                        
+                        content = content.replace(/Published\s+using\s+Google\s+Docs/gi, '');
+                        content = content.replace(/Report\s+abuse/gi, '');
+                        content = content.replace(/Learn\s+more/gi, '');
+                        content = content.replace(/Updated\s+automatically\s+every\s+\d+\s+minutes/gi, '');
+                        content = content.replace(/Panduan\s+Tahfiz\s+TMB/gi, '');
+                        
+                        content = content.replace(/<footer[\s\S]*?<\/footer>/gi, '');
+                        content = content.replace(/<div[^>]*class="[^"]*(?:footer|publishing|google)[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '');
+                        
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = content;
+                        
+                        const elementsToRemove = [
+                            'Published using Google Docs',
+                            'Report abuse',
+                            'Learn more',
+                            'Updated automatically every'
+                        ];
+                        
+                        elementsToRemove.forEach(text => {
+                            const allElements = tempDiv.querySelectorAll('*');
+                            allElements.forEach(el => {
+                                if (el.textContent && el.textContent.includes(text)) {
+                                    el.remove();
                                 }
+                            });
+                        });
+                        
+                        const classSelectors = ['.docs-footer', '.publishing', '.google-docs-footer', '.footer'];
+                        classSelectors.forEach(selector => {
+                            const elements = tempDiv.querySelectorAll(selector);
+                            elements.forEach(el => el.remove());
+                        });
+                        
+                        const allLinks = tempDiv.querySelectorAll('a');
+                        allLinks.forEach(link => {
+                            if (link.href && (link.href.includes('google.com') || link.href.includes('policies'))) {
+                                link.remove();
                             }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="panduan-wrapper">
-                            ${content}
-                        </div>
-                    </body>
-                    </html>
-                `);
-                iframeDoc.close();
-                
-                // Atur tinggi iframe secara dinamis
-                const setIframeHeight = () => {
-                    if (iframeDoc && iframeDoc.body) {
-                        const height = iframeDoc.body.scrollHeight;
-                        iframe.style.height = Math.max(height, 200) + 'px';
-                    }
-                };
-                
-                setTimeout(setIframeHeight, 100);
-                window.addEventListener('resize', () => {
-                    setTimeout(setIframeHeight, 100);
-                });
-                
-            }, 500);
-        } else {
-            completeLoading(false);
+                        });
+                        
+                        content = tempDiv.innerHTML;
+                        
+                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        iframeDoc.open();
+                        iframeDoc.write(`
+                            <!DOCTYPE html>
+                            <html>
+                            <head>
+                                <meta charset="UTF-8">
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <style>
+                                    body {
+                                        font-family: 'Segoe UI', 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
+                                        color: #1e3a2f;
+                                        background: white;
+                                        padding: 0 !important;
+                                        margin: 0 !important;
+                                        line-height: 1.6;
+                                    }
+                                    
+                                    .panduan-wrapper {
+                                        padding: 15px 20px !important;
+                                        max-width: 100% !important;
+                                        box-sizing: border-box !important;
+                                    }
+                                    
+                                    .docs-footer, .publishing, .google-docs-footer, .footer {
+                                        display: none !important;
+                                    }
+                                    
+                                    h1, h2, h3, h4, h5, h6 {
+                                        color: #2d6a4f;
+                                        margin: 20px 0 12px 0;
+                                        font-weight: bold;
+                                    }
+                                    
+                                    h1 {
+                                        font-size: 1.8rem;
+                                        padding-bottom: 8px;
+                                    }
+                                    
+                                    h2 {
+                                        font-size: 1.5rem;
+                                        padding-bottom: 6px;
+                                    }
+                                    
+                                    h3 {
+                                        font-size: 1.3rem;
+                                        color: #2e7d32;
+                                    }
+                                    
+                                    p {
+                                        margin-bottom: 12px;
+                                    }
+                                    
+                                    ul, ol {
+                                        padding-left: 25px;
+                                        margin: 10px 0 15px 0;
+                                    }
+                                    
+                                    li {
+                                        margin-bottom: 5px;
+                                    }
+                                    
+                                    table {
+                                        display: block;
+                                        width: 100%;
+                                        overflow-x: auto;
+                                        border-collapse: collapse;
+                                        margin: 15px 0;
+                                    }
+                                    
+                                    table td, table th {
+                                        border: 1px solid #cbd5e1;
+                                        padding: 8px 12px;
+                                    }
+                                    
+                                    table th {
+                                        background: #e9f5e6;
+                                    }
+                                    
+                                    img {
+                                        max-width: 100%;
+                                        height: auto;
+                                    }
+                                    
+                                    a {
+                                        color: #2d6a4f;
+                                        text-decoration: none;
+                                    }
+                                    
+                                    a:hover {
+                                        text-decoration: underline;
+                                    }
+                                    
+                                    blockquote {
+                                        border-left: 4px solid #2d6a4f;
+                                        margin: 15px 0;
+                                        padding: 10px 20px;
+                                        background: #f0f7e8;
+                                        font-style: italic;
+                                    }
+                                    
+                                    pre, code {
+                                        background: #f8fafc;
+                                        border-radius: 6px;
+                                        font-family: monospace;
+                                    }
+                                    
+                                    pre {
+                                        padding: 12px;
+                                        overflow-x: auto;
+                                    }
+                                    
+                                    @media (max-width: 768px) {
+                                        .panduan-wrapper {
+                                            padding: 10px 12px !important;
+                                        }
+                                    }
+                                </style>
+                            </head>
+                            <body>
+                                <div class="panduan-wrapper">
+                                    ${content}
+                                </div>
+                            </body>
+                            </html>
+                        `);
+                        iframeDoc.close();
+                        
+                        const setIframeHeight = () => {
+                            if (iframeDoc && iframeDoc.body) {
+                                const height = iframeDoc.body.scrollHeight;
+                                iframe.style.height = Math.max(height, 200) + 'px';
+                            }
+                        };
+                        
+                        setTimeout(setIframeHeight, 100);
+                        window.addEventListener('resize', () => {
+                            setTimeout(setIframeHeight, 100);
+                        });
+                        
+                    }, 500);
+                } else {
+                    completeLoading(false);
+                    setTimeout(() => {
+                        panduanDiv.innerHTML = `<div style="background:#ffe6e6; border:1px solid #c62828; border-radius:10px; padding:20px; text-align:center;">
+                            <p style="color:#c62828;">❌ Gagal memuat panduan: ${response.message || 'Error'}</p>
+                            <button onclick="loadPanduan()" style="margin-top:15px; padding:8px 20px; background:#2d6a4f; color:white; border:none; border-radius:8px; cursor:pointer;">🔄 Coba Lagi</button>
+                        </div>`;
+                    }, 800);
+                }
+            };
+            
+            const script = document.createElement('script');
+            script.id = 'panduanScript_' + callbackName;
+            script.src = `${GAS_PANDUAN_URL}?callback=${callbackName}`;
+            document.body.appendChild(script);
+            
             setTimeout(() => {
-                panduanDiv.innerHTML = `<div style="background:#ffe6e6; border:1px solid #c62828; border-radius:10px; padding:20px; text-align:center;">
-                    <p style="color:#c62828;">❌ Gagal memuat panduan: ${response.message || 'Error'}</p>
-                    <button onclick="loadPanduan()" style="margin-top:15px; padding:8px 20px; background:#2d6a4f; color:white; border:none; border-radius:8px; cursor:pointer;">🔄 Coba Lagi</button>
-                </div>`;
-            }, 800);
+                if (window[callbackName]) {
+                    delete window[callbackName];
+                    if (script) script.remove();
+                    completeLoading(false);
+                    panduanDiv.innerHTML = `<div style="background:#ffe6e6; padding:20px; text-align:center;">
+                        <p>⏰ Timeout: Server tidak merespons</p>
+                        <button onclick="loadPanduan()" style="margin-top:15px; padding:8px 20px; background:#2d6a4f; color:white; border:none; border-radius:8px; cursor:pointer;">🔄 Coba Lagi</button>
+                    </div>`;
+                }
+            }, 15000);
         }
-    };
-    
-    const script = document.createElement('script');
-    script.id = 'panduanScript_' + callbackName;
-    script.src = `${GAS_PANDUAN_URL}?callback=${callbackName}`;
-    document.body.appendChild(script);
-    
-    setTimeout(() => {
-        if (window[callbackName]) {
-            delete window[callbackName];
-            if (script) script.remove();
-            completeLoading(false);
-            panduanDiv.innerHTML = `<div style="background:#ffe6e6; padding:20px; text-align:center;">
-                <p>⏰ Timeout: Server tidak merespons</p>
-                <button onclick="loadPanduan()" style="margin-top:15px; padding:8px 20px; background:#2d6a4f; color:white; border:none; border-radius:8px; cursor:pointer;">🔄 Coba Lagi</button>
-            </div>`;
-        }
-    }, 15000);
-}
         
         // ========== LOGIN ==========
-        function showLoginFormSidebar() {
+        function showLoginFormInline() {
             if (!currentUser) {
-                document.getElementById('loginFormSidebar').style.display = 'block';
-                document.getElementById('sidebarLoginBtn').style.display = 'none';
-                document.getElementById('loginErrorSidebar').innerHTML = '';
+                document.getElementById('loginFormInline').style.display = 'flex';
+                document.getElementById('navLoginBtn').style.display = 'none';
+                document.getElementById('loginErrorInline').innerHTML = '';
             }
         }
         
-        function hideLoginFormSidebar() {
-            document.getElementById('loginFormSidebar').style.display = 'none';
-            document.getElementById('sidebarLoginBtn').style.display = 'block';
-            document.getElementById('loginEmailSidebar').value = '';
-            document.getElementById('loginPasswordSidebar').value = '';
+        function hideLoginFormInline() {
+            document.getElementById('loginFormInline').style.display = 'none';
+            document.getElementById('navLoginBtn').style.display = 'inline-flex';
+            document.getElementById('loginEmailInline').value = '';
+            document.getElementById('loginPasswordInline').value = '';
         }
         
-        function doLoginFromSidebar() {
-            const login = document.getElementById('loginEmailSidebar').value.trim();
-            const password = document.getElementById('loginPasswordSidebar').value;
+        function doLoginFromInline() {
+            const login = document.getElementById('loginEmailInline').value.trim();
+            const password = document.getElementById('loginPasswordInline').value;
             if (!login || !password) {
-                document.getElementById('loginErrorSidebar').innerHTML = 'Harap isi email/ID dan password';
+                document.getElementById('loginErrorInline').innerHTML = 'Harap isi email/ID dan password';
                 return;
             }
             
@@ -1285,22 +967,17 @@ function loadPanduan() {
                     localStorage.setItem('tahfidz_user', JSON.stringify(currentUser));
                     completeLoading(true);
                     setTimeout(() => {
-                        document.getElementById('loginFormSidebar').style.display = 'none';
-                        document.getElementById('sidebarLoginBtn').style.display = 'none';
-                        document.getElementById('sidebarLogoutBtn').style.display = 'block';
-                        updateSidebarUI();
-                        renderNavSidebar();
+                        document.getElementById('loginFormInline').style.display = 'none';
+                        document.getElementById('navLoginBtn').style.display = 'none';
+                        document.getElementById('navLogoutBtn').style.display = 'inline-flex';
+                        updateNavUI();
+                        renderNavMenu();
                         showSection('homeSection');
-                        // Reset sidebar state setelah login
-                        if (sidebar.classList.contains('open')) {
-                            closeSidebar();
-                        }
-                        document.body.style.overflow = '';
                     }, 1000);
                 } else {
                     completeLoading(false);
                     setTimeout(() => {
-                        document.getElementById('loginErrorSidebar').innerHTML = response.message || 'Login gagal';
+                        document.getElementById('loginErrorInline').innerHTML = response.message || 'Login gagal';
                     }, 800);
                 }
             };
@@ -1314,32 +991,26 @@ function loadPanduan() {
         function logout() {
             currentUser = null;
             localStorage.removeItem('tahfidz_user');
-            updateSidebarUI();
-            renderNavSidebar();
+            updateNavUI();
+            renderNavMenu();
             showSection('homeSection');
-            hideLoginFormSidebar();
-            // Reset sidebar state setelah logout
-            if (sidebar.classList.contains('open')) {
-                closeSidebar();
-            }
-            document.body.style.overflow = '';
+            hideLoginFormInline();
         }
         
-        function updateSidebarUI() {
-            const userStatusDiv = document.getElementById('userStatusSidebar');
-            const loginBtn = document.getElementById('sidebarLoginBtn');
-            const logoutBtn = document.getElementById('sidebarLogoutBtn');
-            const loginForm = document.getElementById('loginFormSidebar');
+        function updateNavUI() {
+            const userStatus = document.getElementById('userStatusInline');
+            const loginBtn = document.getElementById('navLoginBtn');
+            const logoutBtn = document.getElementById('navLogoutBtn');
             
             if (currentUser) {
                 const roleText = currentUser.role === 'super_admin' ? 'Operator' : 'Musammi';
-                userStatusDiv.innerHTML = `🎓 ${currentUser.email} (${roleText})`;
+                userStatus.textContent = `🎓 ${currentUser.email} (${roleText})`;
+                userStatus.style.display = 'inline-block';
                 loginBtn.style.display = 'none';
-                logoutBtn.style.display = 'block';
-                if (loginForm) loginForm.style.display = 'none';
+                logoutBtn.style.display = 'inline-flex';
             } else {
-                userStatusDiv.innerHTML = '';
-                loginBtn.style.display = 'block';
+                userStatus.style.display = 'none';
+                loginBtn.style.display = 'inline-flex';
                 logoutBtn.style.display = 'none';
             }
         }
@@ -1349,70 +1020,67 @@ function loadPanduan() {
             if (stored) {
                 try {
                     currentUser = JSON.parse(stored);
-                    updateSidebarUI();
-                    renderNavSidebar();
                 } catch(e) { console.error(e); }
-            } else {
-                updateSidebarUI();
-                renderNavSidebar();
             }
+            updateNavUI();
+            renderNavMenu();
             showSection('homeSection');
         }
-// ========== NAVIGASI DARI EXTERNAL KE SECTION ==========
-(function() {
-  function processTargetSection() {
-    const targetSection = localStorage.getItem('targetSection');
-    if (!targetSection) return;
-    
-    localStorage.removeItem('targetSection');
-    
-    let retry = 0;
-    const maxRetry = 30;
-    
-    function tryActivate() {
-      const section = document.getElementById(targetSection);
-      
-      if (section) {
-        if (typeof showSection === 'function') {
-          showSection(targetSection);
-        } else {
-          section.classList.add('active');
-          document.querySelectorAll('.section').forEach(s => {
-            if (s.id !== targetSection) s.classList.remove('active');
-          });
-        }
-        
-        if (typeof setActiveNav === 'function') {
-          setActiveNav(targetSection);
-        }
-        
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        
-        if (targetSection === 'panduanSection' && typeof loadPanduan === 'function') {
-          loadPanduan();
-        }
-        
-        return;
-      }
-      
-      retry++;
-      if (retry < maxRetry) {
-        setTimeout(tryActivate, 100);
-      }
-    }
-    
-    tryActivate();
-  }
-  
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', processTargetSection);
-  } else {
-    processTargetSection();
-  }
-})();
+
+        // ========== NAVIGASI DARI EXTERNAL KE SECTION ==========
+        (function() {
+          function processTargetSection() {
+            const targetSection = localStorage.getItem('targetSection');
+            if (!targetSection) return;
+            
+            localStorage.removeItem('targetSection');
+            
+            let retry = 0;
+            const maxRetry = 30;
+            
+            function tryActivate() {
+              const section = document.getElementById(targetSection);
+              
+              if (section) {
+                if (typeof showSection === 'function') {
+                  showSection(targetSection);
+                } else {
+                  section.classList.add('active');
+                  document.querySelectorAll('.section').forEach(s => {
+                    if (s.id !== targetSection) s.classList.remove('active');
+                  });
+                }
+                
+                if (typeof setActiveNav === 'function') {
+                  setActiveNav(targetSection);
+                }
+                
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                if (targetSection === 'panduanSection' && typeof loadPanduan === 'function') {
+                  loadPanduan();
+                }
+                
+                return;
+              }
+              
+              retry++;
+              if (retry < maxRetry) {
+                setTimeout(tryActivate, 100);
+              }
+            }
+            
+            tryActivate();
+          }
+          
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', processTargetSection);
+          } else {
+            processTargetSection();
+          }
+        })();
 
         // ========== INIT ==========
-        loadSidebarState();
         loadStoredUser();
     </script>
 </body>
