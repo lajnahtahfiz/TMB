@@ -849,6 +849,79 @@
       background: #e67345;
       transform: translateY(-2px);
     }
+        /* ========== AUTO REFRESH INDICATOR ========== */
+    .auto-refresh-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.15);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      margin-left: 8px;
+      color: rgba(255,255,255,0.9);
+      transition: all 0.3s;
+    }
+    
+    .auto-refresh-badge.checking {
+      background: rgba(255,255,255,0.35);
+    }
+    
+    .auto-refresh-badge .dot-indicator {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #52b788;
+      box-shadow: 0 0 6px #52b788;
+      animation: autoPulse 2s ease-in-out infinite;
+    }
+    
+    .auto-refresh-badge.checking .dot-indicator {
+      background: #ffb74d;
+      box-shadow: 0 0 6px #ffb74d;
+    }
+    
+    @keyframes autoPulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    
+    /* Toast notifikasi update data */
+    .refresh-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: linear-gradient(135deg, #2d6a4f 0%, #2e7d32 100%);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(46, 125, 50, 0.4);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+      pointer-events: none;
+    }
+    
+    .refresh-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    @media (max-width: 768px) {
+      .refresh-toast {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        font-size: 12px;
+        padding: 10px 16px;
+      }
+    }
   </style>
   <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 </head>
@@ -897,6 +970,10 @@
         
         <button class="header-refresh" onclick="loadAllData()">
           <i class="fas fa-sync-alt"></i> Refresh Jadwal
+          <span class="auto-refresh-badge" id="autoRefreshBadge">
+            <span class="dot-indicator"></span>
+            <span id="autoRefreshText"></span>
+          </span>
         </button>
       </div>
       
@@ -1706,9 +1783,144 @@
     }
     
     // Inisialisasi
+        // ========== AUTO REFRESH ==========
+    let autoRefreshInterval = null;
+    const AUTO_REFRESH_INTERVAL = 30000; // 30 detik
+    let lastDataHash = ''; // Untuk deteksi perubahan
+    let isAutoChecking = false; // Mencegah overlap saat cek
+
+    // Buat hash sederhana dari data untuk mendeteksi perubahan
+    function generateDataHash(cache) {
+      try {
+        return JSON.stringify(cache);
+      } catch (e) {
+        return String(Date.now());
+      }
+    }
+    
+    // Tampilkan badge "checking" saat sedang cek
+    function setAutoRefreshChecking(isChecking) {
+      const badge = document.getElementById('autoRefreshBadge');
+      if (!badge) return;
+      if (isChecking) badge.classList.add('checking');
+      else badge.classList.remove('checking');
+    }
+    
+    // Tampilkan toast notifikasi
+    let toastTimeout = null;
+    function showRefreshToast(message) {
+      const toast = document.getElementById('refreshToast');
+      if (!toast) return;
+      toast.querySelector('span').textContent = message || 'Data berhasil diperbarui!';
+      toast.classList.add('show');
+      
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+    
+    // Fungsi utama auto refresh (silent, tanpa popup)
+    async function autoRefreshData() {
+      // Skip hanya jika sedang loading manual atau sedang auto cek
+      if (isDataLoading || isAutoChecking) return;
+      
+      isAutoChecking = true;
+      setAutoRefreshChecking(true);
+      
+      try {
+        // Ambil daftar sheet terbaru
+        const newSheets = await getSheets();
+        if (!newSheets || newSheets.length === 0) {
+          isAutoChecking = false;
+          setAutoRefreshChecking(false);
+          return;
+        }
+        
+        // Ambil data semua sheet secara paralel
+        const newCache = {};
+        await Promise.all(newSheets.map(async (name) => {
+          newCache[name] = await getSheetData(name);
+        }));
+        
+        // Bandingkan dengan cache lama
+        const newHash = generateDataHash(newCache);
+        
+        if (newHash !== lastDataHash) {
+          // Data berubah! Update cache & re-render
+          console.log('🔄 Auto refresh: data halaqoh berubah, memperbarui tampilan...');
+          sheetsList = newSheets;
+          sheetDataCache = newCache;
+          lastDataHash = newHash;
+          
+          // Rebuild tabs (pertahankan tab aktif)
+          createTabs(sheetsList);
+          
+          // Jika currentSheet masih ada, refresh. Jika tidak, fallback ke sheet pertama
+          if (!sheetsList.includes(currentSheet)) {
+            currentSheet = sheetsList[0];
+            document.querySelectorAll('.tab-btn').forEach((b, i) => {
+              b.classList.toggle('active', i === 0);
+            });
+          }
+          
+          // Update rawData & render ulang (filter & search tetap)
+          if (sheetDataCache[currentSheet]) {
+            rawData = sheetDataCache[currentSheet];
+            // Jangan reset filter — biarkan user tetap dengan filter aktif
+            updateFiltersData(rawData);
+            renderCards();
+          }
+          
+          // Update badge & toast
+          const badgeText = document.getElementById('autoRefreshText');
+          if (badgeText) badgeText.textContent = 'Baru saja';
+          setTimeout(() => {
+            if (badgeText) badgeText.textContent = 'Auto 30s';
+          }, 5000);
+          
+          showRefreshToast('📢 Data Halaqoh terbaru telah dimuat!');
+        } else {
+          console.log('✅ Auto refresh: tidak ada perubahan data halaqoh');
+        }
+      } catch (err) {
+        console.warn('Auto refresh gagal:', err);
+        // Silent fail — jangan ganggu user dengan error
+      } finally {
+        isAutoChecking = false;
+        setAutoRefreshChecking(false);
+      }
+    }
+    
+    // Mulai interval auto refresh
+    function startAutoRefresh() {
+      stopAutoRefresh(); // pastikan tidak double
+      autoRefreshInterval = setInterval(autoRefreshData, AUTO_REFRESH_INTERVAL);
+      console.log(`⏱️ Auto refresh aktif: setiap ${AUTO_REFRESH_INTERVAL / 1000} detik (selama halaman dibuka)`);
+    }
+    
+    // Hentikan interval auto refresh
+    function stopAutoRefresh() {
+      if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+        autoRefreshInterval = null;
+      }
+    }
+    
+    // ========== INIT ==========
     loadSidebarState();
     loadStoredUser();
-    loadAllData();
+    loadAllData().then(() => {
+      // Simpan hash awal setelah data awal dimuat
+      lastDataHash = generateDataHash(sheetDataCache);
+      // Mulai auto refresh setelah data awal berhasil dimuat
+      startAutoRefresh();
+    });
   </script>
+  <!-- Toast notifikasi update data -->
+  <div class="refresh-toast" id="refreshToast">
+    <i class="fas fa-check-circle"></i>
+    <span>Data berhasil diperbarui!</span>
+  </div>
 </body>
 </html>
