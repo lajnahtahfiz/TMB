@@ -722,7 +722,7 @@
       .main-container { margin-left: 0; }
     }
     
-    /* ========== LOADING OVERLAY (DISAMAKAN DENGAN REFERENSI) ========== */
+    /* ========== LOADING OVERLAY ========== */
     .loading-overlay {
       position: fixed;
       top: 0;
@@ -777,6 +777,78 @@
     .dots::after { content: ''; animation: dots 1.5s steps(4, end) infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     @keyframes dots { 0%, 20% { content: ''; } 40% { content: '.'; } 60% { content: '..'; } 80%, 100% { content: '...'; } }
+    
+    /* ========== STYLE ERROR DI DALAM POPUP LOADING ========== */
+    .loading-card.error-state h3 {
+      color: #b91c1c;
+    }
+    
+    .loading-card .error-icon {
+      font-size: 48px;
+      color: #ef4444;
+      margin-bottom: 12px;
+      display: block;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.08); }
+    }
+    
+    .loading-card .error-message {
+      color: #7f1d1d;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+    
+    .loading-card .error-submessage {
+      color: #94a3b8;
+      font-size: 0.75rem;
+      margin-bottom: 18px;
+    }
+    
+    .loading-card .error-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .loading-card .error-actions button {
+      padding: 9px 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+    
+    .loading-card .error-actions .btn-retry {
+      background: #2d6a4f;
+      color: white;
+    }
+    
+    .loading-card .error-actions .btn-retry:hover {
+      background: #1e4a2f;
+      transform: translateY(-2px);
+    }
+    
+    .loading-card .error-actions .btn-reload {
+      background: #ff8a5c;
+      color: white;
+    }
+    
+    .loading-card .error-actions .btn-reload:hover {
+      background: #e67345;
+      transform: translateY(-2px);
+    }
   </style>
   <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 </head>
@@ -941,7 +1013,7 @@
       }
     });
     
-    // ========== LOADING (DISAMAKAN DENGAN REFERENSI) ==========
+    // ========== LOADING ==========
     let activeTimeout = null;
     let currentLoadingOverlay = null;
     
@@ -954,7 +1026,7 @@
       overlay.className = 'loading-overlay';
       overlay.id = 'loadingOverlay';
       overlay.innerHTML = `
-        <div class="loading-card">
+        <div class="loading-card" id="loadingCard">
           <h3>${title}</h3>
           <div class="progress-container">
             <div class="progress-bar" id="progressBar"></div>
@@ -1010,6 +1082,48 @@
       const existingOverlay = document.getElementById('loadingOverlay');
       if (existingOverlay) existingOverlay.remove();
       currentLoadingOverlay = null;
+    }
+    
+    // ========== TAMPILKAN ERROR DI DALAM POPUP LOADING ==========
+    function showErrorInLoadingPopup(title, message, submessage) {
+      // Hentikan animasi progress
+      if (window.loadingInterval) {
+        clearInterval(window.loadingInterval);
+        window.loadingInterval = null;
+      }
+      
+      const card = document.getElementById('loadingCard');
+      if (!card) {
+        // Kalau tidak ada overlay loading, buat baru
+        showLoadingWithProgress(title);
+        setTimeout(() => showErrorInLoadingPopup(title, message, submessage), 50);
+        return;
+      }
+      
+      card.classList.add('error-state');
+      card.innerHTML = `
+        <i class="fas fa-exclamation-triangle error-icon"></i>
+        <h3>${title}</h3>
+        <p class="error-message">${message}</p>
+        <p class="error-submessage">${submessage || ''}</p>
+        <div class="error-actions">
+          <button class="btn-retry" onclick="retryFromPopup()">
+            <i class="fas fa-sync-alt"></i> Coba Lagi
+          </button>
+          <button class="btn-reload" onclick="reloadFromPopup()">
+            <i class="fas fa-redo-alt"></i> Refresh Halaman
+          </button>
+        </div>
+      `;
+    }
+    
+    function retryFromPopup() {
+      hideLoading();
+      setTimeout(() => { loadAllData(); }, 200);
+    }
+    
+    function reloadFromPopup() {
+      location.reload();
     }
     
     // ========== LOGIN ==========
@@ -1460,7 +1574,7 @@
       } catch (error) { return []; }
     }
     
-    // ========== LOAD ALL DATA (DENGAN TIMEOUT & TOMBOL REFRESH) ==========
+    // ========== LOAD ALL DATA (TIMEOUT 1 MENIT, ERROR DI DALAM POPUP) ==========
     async function loadAllData() {
       if (isDataLoading) return;
       isDataLoading = true;
@@ -1471,47 +1585,29 @@
       
       showLoadingWithProgress('Memuat Data Halaqoh', ['Mengambil daftar sheet', 'Memuat data sheet', 'Menyusun data']);
       
-      // Timeout handler - pastikan loading hilang & tampilkan tombol refresh
+      // Timeout 1 MENIT (60000 ms) → tampilkan error DI DALAM POPUP
       const timeoutId = setTimeout(() => {
         if (isDataLoading) {
-          console.warn('Timeout loading halaqoh');
-          completeLoading();
-          document.getElementById('loadingArea').style.display = 'none';
-          document.getElementById('errorArea').style.display = 'block';
-          document.getElementById('errorArea').innerHTML = `
-            <div class="error">
-              <i class="fas fa-hourglass-half"></i> ⏰ Waktu habis! Server tidak merespons.<br><br>
-              <button onclick="loadAllData()" style="margin-top:15px; padding:8px 20px; background:#2d6a4f; color:white; border:none; border-radius:8px; cursor:pointer;">
-                <i class="fas fa-sync-alt"></i> Coba Lagi
-              </button>
-              <button onclick="location.reload()" style="margin-top:15px; margin-left:10px; padding:8px 20px; background:#ff8a5c; color:white; border:none; border-radius:8px; cursor:pointer;">
-                <i class="fas fa-redo-alt"></i> Refresh Halaman
-              </button>
-            </div>`;
+          console.warn('Timeout loading halaqoh (60 detik)');
+          showErrorInLoadingPopup(
+            '⏰ Waktu Habis',
+            'Server tidak merespons dalam 1 menit.',
+            'Silakan periksa koneksi internet Anda lalu coba lagi.'
+          );
           isDataLoading = false;
         }
-      }, 15000);
+      }, 60000);
       
       try {
         sheetsList = await getSheets();
         if (sheetsList.length === 0) {
           clearTimeout(timeoutId);
-          completeLoading();
-          setTimeout(() => {
-            document.getElementById('loadingArea').style.display = 'none';
-            document.getElementById('errorArea').style.display = 'block';
-            document.getElementById('errorArea').innerHTML = `
-              <div class="error">
-                ❌ Tidak ada sheet ditemukan.<br><br>
-                <button onclick="loadAllData()" style="margin-top:15px; padding:8px 20px; background:#2d6a4f; color:white; border:none; border-radius:8px; cursor:pointer;">
-                  <i class="fas fa-sync-alt"></i> Coba Lagi
-                </button>
-                <button onclick="location.reload()" style="margin-top:15px; margin-left:10px; padding:8px 20px; background:#ff8a5c; color:white; border:none; border-radius:8px; cursor:pointer;">
-                  <i class="fas fa-redo-alt"></i> Refresh Halaman
-                </button>
-              </div>`;
-            isDataLoading = false;
-          }, 300);
+          showErrorInLoadingPopup(
+            '❌ Data Tidak Ditemukan',
+            'Tidak ada sheet yang ditemukan.',
+            'Silakan hubungi admin untuk memeriksa data.'
+          );
+          isDataLoading = false;
           return;
         }
         
@@ -1531,22 +1627,12 @@
       } catch (err) {
         clearTimeout(timeoutId);
         console.error('Error loadAllData:', err);
-        completeLoading();
-        setTimeout(() => {
-          document.getElementById('loadingArea').style.display = 'none';
-          document.getElementById('errorArea').style.display = 'block';
-          document.getElementById('errorArea').innerHTML = `
-            <div class="error">
-              <i class="fas fa-exclamation-triangle"></i> ❌ Gagal memuat data: ${escapeHtml(err.message || 'Koneksi terputus')}<br><br>
-              <button onclick="loadAllData()" style="margin-top:15px; padding:8px 20px; background:#2d6a4f; color:white; border:none; border-radius:8px; cursor:pointer;">
-                <i class="fas fa-sync-alt"></i> Coba Lagi
-              </button>
-              <button onclick="location.reload()" style="margin-top:15px; margin-left:10px; padding:8px 20px; background:#ff8a5c; color:white; border:none; border-radius:8px; cursor:pointer;">
-                <i class="fas fa-redo-alt"></i> Refresh Halaman
-              </button>
-            </div>`;
-          isDataLoading = false;
-        }, 300);
+        showErrorInLoadingPopup(
+          '❌ Gagal Memuat Data',
+          escapeHtml(err.message || 'Koneksi terputus.'),
+          'Silakan coba lagi atau muat ulang halaman.'
+        );
+        isDataLoading = false;
       }
     }
     
