@@ -1268,7 +1268,7 @@
           );
           isDataLoading = false;
         }
-      }, 60000);
+      }, 300000);
       
       try {
         sheetsList = await getSheets();
@@ -1431,8 +1431,8 @@
         container.innerHTML = `
           <div style="text-align: center; padding: 60px 20px; background: #fef2f2; border-radius: 16px; border: 1px solid #fecaca;">
             <i class="fas fa-database" style="font-size: 48px; color: #ef4444; margin-bottom: 16px; display: block;"></i>
-            <h3 style="color: #991b1b; margin-bottom: 8px;"> Data hafalan tidak ditemukan!</h3>
-            <p style="color: #7f1d1d; margin-bottom: 16px;">Kata kunci yang Antum masukkan tidak terdata</p>
+            <h3 style="color: #991b1b; margin-bottom: 8px;">Afwan! Koneksi Buruk atau Data hafalan tidak ditemukan!</h3>
+            <p style="color: #7f1d1d; margin-bottom: 16px;">Mungkin Kata kunci yang Antum masukkan tidak sesuai atau koneksi buruk</p>
             <p style="color: #b91c1c; font-size: 13px;"><i class="fas fa-envelope"></i> Silakan hubungi admin jika ada ketidaksesuaian data.</p>
           </div>
         `;
