@@ -878,7 +878,6 @@
           <i class="fas fa-sync-alt"></i> Refresh Jadwal
           <span class="auto-refresh-badge" id="autoRefreshBadge">
             <span class="dot-indicator"></span>
-            <span id="autoRefreshText">Auto 30s</span>
           </span>
         </button>
       </div>
@@ -1092,7 +1091,7 @@
         <p class="error-submessage">${submessage || ''}</p>
         <div class="error-actions">
           <button class="btn-retry" onclick="retryFromPopup()">
-            <i class="fas fa-sync-alt"></i> Coba Lagi
+            <i class="fas fa-sync-alt"></i> Refresh Jadwal
           </button>
           <button class="btn-reload" onclick="reloadFromPopup()">
             <i class="fas fa-redo-alt"></i> Refresh Halaman
@@ -1303,7 +1302,7 @@
     }
     
     // ========== SCRIPT DATA JADWAL UJIAN ==========
-    const API_URL = "https://script.google.com/macros/s/AKfycbz3wlTr1s4GaiLN_GKZkdWWfnQ7RTffb6_Xio2ve2w_89OGgIWO9cozdUtYwVqXsQfG/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbwcyqvvCPf13tleeQKwoRnAuUKEzI8XNByFzJuFiltWVygAkM59oacJsSHILRoCVMhO/exec";
     
     let sheetsList = [];
     let currentSheet = '';
@@ -1477,7 +1476,7 @@
           showErrorInLoadingPopup(
             '❌ Afwan, Data Tidak Ditemukan',
             'Tidak ada jadwal yang ditemukan atau koneksi buruk.',
-            'Silakan tekan tombol Coba Lagi untuk memuat ulang jadwal! Hubungi admin untuk memeriksa data jika jadwal belum dapat dimuat.'
+            'Silakan tekan tombol Refresh Jadwal untuk memuat ulang jadwal! Hubungi admin untuk memeriksa data jika jadwal belum dapat dimuat.'
           );
           isDataLoading = false;
           return;
@@ -1506,7 +1505,7 @@
         showErrorInLoadingPopup(
           '❌ Gagal Memuat Data',
           escapeHtml(err.message || 'Koneksi terputus.'),
-          'Silakan klik Coba Lagi atau Refresh halaman.'
+          'Silakan klik Refresh Jadwal atau Refresh halaman.'
         );
         isDataLoading = false;
       }
@@ -1761,8 +1760,10 @@
     
     // Fungsi utama auto refresh (silent, tanpa popup)
     async function autoRefreshData() {
-      // Skip hanya jika sedang loading manual atau sedang auto cek
+      // Skip jika sedang loading manual atau sedang auto cek
       if (isDataLoading || isAutoChecking) return;
+      // Skip jika tab browser tidak aktif (hemat kuota)
+      if (document.hidden) return;
       
       isAutoChecking = true;
       setAutoRefreshChecking(true);
@@ -1814,6 +1815,7 @@
           }
           
           // Update badge & toast
+          const badge = document.getElementById('autoRefreshBadge');
           const badgeText = document.getElementById('autoRefreshText');
           if (badgeText) badgeText.textContent = 'Baru saja';
           setTimeout(() => {
@@ -1837,7 +1839,7 @@
     function startAutoRefresh() {
       stopAutoRefresh(); // pastikan tidak double
       autoRefreshInterval = setInterval(autoRefreshData, AUTO_REFRESH_INTERVAL);
-      console.log(`⏱️ Auto refresh aktif: setiap ${AUTO_REFRESH_INTERVAL / 1000} detik (selama halaman dibuka)`);
+      console.log(`⏱️ Auto refresh aktif: setiap ${AUTO_REFRESH_INTERVAL / 1000} detik`);
     }
     
     // Hentikan interval auto refresh
